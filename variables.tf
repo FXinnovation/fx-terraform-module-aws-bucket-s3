@@ -18,12 +18,12 @@ variable "tags" {
 
 variable "name" {
   description = "The name of the bucket."
-  type = "string"
+  type        = "string"
 }
 
 variable "bucket_policy_json" {
   description = "A valid bucket policy JSON document."
-  default = ""
+  default     = ""
 }
 
 #####
@@ -72,6 +72,7 @@ variable "iam_policy_read_name" {
   description = "Name of the IAM read only access to S3 bucket."
   default     = ""
 }
+
 variable "iam_policy_full_name" {
   description = "Name of the IAM read write access to S3 bucket."
   default     = ""

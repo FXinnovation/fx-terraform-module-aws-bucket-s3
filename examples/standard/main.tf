@@ -15,17 +15,15 @@ module "standard" {
   source = "../../"
 
   name = "tftest${random_string.this.result}"
-  
 
-  kms_key_create                    = true
-  kms_key_name                      = "tftestS3KmsKey${random_string.this.result}"
-  kms_key_alias_name                = "tftestS3KeySsm${random_string.this.result}"
-  iam_policy_create                 = true
-  iam_policy_name_read_only  = "tftestPolicyReadS3${random_string.this.result}"
-  iam_policy_name_full = "tftestPolicyFullS3${random_string.this.result}"
+  kms_key_create            = true
+  kms_key_name              = "tftestS3KmsKey${random_string.this.result}"
+  kms_key_alias_name        = "tftestS3KeySsm${random_string.this.result}"
+  iam_policy_create         = true
+  iam_policy_name_read_only = "tftestPolicyReadS3${random_string.this.result}"
+  iam_policy_name_full      = "tftestPolicyFullS3${random_string.this.result}"
 
   tags {
     testTag = "tftest"
   }
 }
-

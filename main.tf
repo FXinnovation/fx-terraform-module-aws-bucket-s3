@@ -28,7 +28,7 @@ resource "aws_s3_bucket_policy" "this" {
   count = "${var.enabled && var.bucket_policy_json != "" ? 1 : 0}"
 
   bucket = "${aws_s3_bucket.this.id}"
-  policy = "${var.bucket_policy_json}" 
+  policy = "${var.bucket_policy_json}"
 }
 
 #####
@@ -54,8 +54,6 @@ resource "aws_kms_alias" "this" {
   name          = "alias/${var.kms_key_alias_name}"
   target_key_id = "${aws_kms_key.this.key_id}"
 }
-
-
 
 #####
 # IAM policy
