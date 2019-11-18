@@ -50,8 +50,7 @@ data "aws_iam_policy_document" "s3" {
     ]
 
     resources = [
-      "${element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}",
-      "${element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}/*",
+      "${module.standard.arn}",
     ]
   }
 }
