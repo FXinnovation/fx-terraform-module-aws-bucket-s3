@@ -1,6 +1,6 @@
 # S3 bucket Standard exemple
 
-Disable S3 bucket module.
+Create S3 bucket, KMS key, and the policies. Also insert a bucket policy.
 
 ## Usage
 

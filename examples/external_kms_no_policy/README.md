@@ -1,6 +1,6 @@
 # S3 bucket Standard exemple
 
-Disable S3 bucket module.
+Create S3 bucket, using and external kms key, without policies creation
 
 ## Usage
 

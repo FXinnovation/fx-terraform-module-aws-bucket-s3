@@ -14,6 +14,6 @@ resource "random_string" "this" {
 module "standard" {
   source = "../../"
 
-  enable = "false"
-  name   = ""
+  enabled = "false"
+  name    = ""
 }
