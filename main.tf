@@ -60,7 +60,7 @@ resource "aws_kms_alias" "this" {
 #####
 
 data "aws_iam_policy_document" "this_read" {
-  count = "${var.enabled && var.policy_create ? 1 : 0}"
+  count = "${var.enabled && var.iam_policy_create ? 1 : 0}"
 
   statement {
     sid = "1"
@@ -118,7 +118,7 @@ data "aws_iam_policy_document" "this_read" {
 }
 
 data "aws_iam_policy_document" "this_full" {
-  count = "${var.enabled && var.policy_create ? 1 : 0}"
+  count = "${var.enabled && var.iam_policy_create ? 1 : 0}"
 
   statement {
     sid = "1"
@@ -177,7 +177,7 @@ data "aws_iam_policy_document" "this_full" {
 }
 
 resource "aws_iam_policy" "this_read" {
-  count = "${var.enabled && var.policy_create ? 1 : 0}"
+  count = "${var.enabled && var.iam_policy_create ? 1 : 0}"
 
   name   = "${var.iam_policy_read_name}"
   path   = "${var.iam_policy_path}"
@@ -185,7 +185,7 @@ resource "aws_iam_policy" "this_read" {
 }
 
 resource "aws_iam_policy" "this_full" {
-  count = "${var.enabled && var.policy_create ? 1 : 0}"
+  count = "${var.enabled && var.iam_policy_create ? 1 : 0}"
 
   name   = "${var.iam_policy_full_name}"
   path   = "${var.iam_policy_path}"
