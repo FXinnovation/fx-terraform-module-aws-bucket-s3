@@ -21,8 +21,13 @@ variable "name" {
   type        = "string"
 }
 
+variable "apply_bucket_policy" {
+  description = "Apply the policy 'bucket_policy_json' to the bucket"
+  default     = "false"
+}
+
 variable "bucket_policy_json" {
-  description = "A valid bucket policy JSON document."
+  description = "A valid bucket policy JSON document if 'apply_bucket_policy' is enable."
   default     = ""
 }
 

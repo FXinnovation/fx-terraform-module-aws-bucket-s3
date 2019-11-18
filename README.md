@@ -9,7 +9,8 @@ Work *only* with terraform 0.11.x
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| bucket\_policy\_json | A valid bucket policy JSON document. | string | `""` | no |
+| apply\_bucket\_policy | Apply the policy 'bucket_policy_json' to the bucket | string | `"false"` | no |
+| bucket\_policy\_json | A valid bucket policy JSON document if 'apply_bucket_policy' is enable. | string | `""` | no |
 | enabled | Enable this module | string | `"true"` | no |
 | iam\_policy\_create | Create read only and read write policy to get an access to S3 bucket. | string | `"false"` | no |
 | iam\_policy\_full\_description | Description of the IAM full policy. | string | `""` | no |

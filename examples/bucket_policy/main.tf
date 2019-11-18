@@ -14,8 +14,9 @@ resource "random_string" "this" {
 module "standard" {
   source = "../../"
 
-  name               = "tftest${random_string.this.result}"
-  bucket_policy_json = "${data.aws_iam_policy_document.s3.json}"
+  name                = "tftest${random_string.this.result}"
+  apply_bucket_policy = "true"
+  bucket_policy_json  = "${data.aws_iam_policy_document.s3.json}"
 
   kms_key_create              = true
   kms_key_name                = "tftestS3KmsKey${random_string.this.result}"

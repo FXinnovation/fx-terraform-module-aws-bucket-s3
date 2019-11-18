@@ -25,7 +25,7 @@ resource "aws_s3_bucket" "this" {
 }
 
 resource "aws_s3_bucket_policy" "this" {
-  count = "${var.enabled && var.bucket_policy_json != "" ? 1 : 0}"
+  count = "${var.enabled && var.apply_bucket_policy ? 1 : 0}"
 
   bucket = "${aws_s3_bucket.this.id}"
   policy = "${var.bucket_policy_json}"
