@@ -73,8 +73,18 @@ variable "iam_policy_read_name" {
   default     = ""
 }
 
+variable "iam_policy_read_description" {
+  description = "Description of the IAM read policy."
+  default     = ""
+}
+
 variable "iam_policy_full_name" {
   description = "Name of the IAM read write access to S3 bucket."
+  default     = ""
+}
+
+variable "iam_policy_full_description" {
+  description = "Description of the IAM full policy."
   default     = ""
 }
 

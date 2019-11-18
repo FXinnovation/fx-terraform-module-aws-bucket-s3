@@ -16,12 +16,14 @@ module "standard" {
 
   name = "tftest${random_string.this.result}"
 
-  kms_key_create       = true
-  kms_key_name         = "tftestS3KmsKey${random_string.this.result}"
-  kms_key_alias_name   = "tftestS3KeySsm${random_string.this.result}"
-  iam_policy_create    = true
-  iam_policy_read_name = "tftestPolicyReadS3${random_string.this.result}"
-  iam_policy_full_name = "tftestPolicyFullS3${random_string.this.result}"
+  kms_key_create              = true
+  kms_key_name                = "tftestS3KmsKey${random_string.this.result}"
+  kms_key_alias_name          = "tftestS3KeySsm${random_string.this.result}"
+  iam_policy_create           = true
+  iam_policy_read_name        = "tftestPolicyReadS3${random_string.this.result}"
+  iam_policy_read_description = "tftest description"
+  iam_policy_full_name        = "tftestPolicyFullS3${random_string.this.result}"
+  iam_policy_full_description = "tftest description"
 
   tags {
     testTag = "tftest"

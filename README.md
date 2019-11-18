@@ -12,8 +12,10 @@ Work *only* with terraform 0.11.x
 | bucket\_policy\_json | A valid bucket policy JSON document. | string | `""` | no |
 | enabled | Enable this module | string | `"true"` | no |
 | iam\_policy\_create | Create read only and read write policy to get an access to S3 bucket. | string | `"false"` | no |
+| iam\_policy\_full\_description | Description of the IAM full policy. | string | `""` | no |
 | iam\_policy\_full\_name | Name of the IAM read write access to S3 bucket. | string | `""` | no |
 | iam\_policy\_path | Path in which to create the policies. | string | `"/"` | no |
+| iam\_policy\_read\_description | Description of the IAM read policy. | string | `""` | no |
 | iam\_policy\_read\_name | Name of the IAM read only access to S3 bucket. | string | `""` | no |
 | kms\_key\_alias\_name | Alias of the kms key if toggle kms_key_create is set | string | `""` | no |
 | kms\_key\_arn | ARN of the kms key if toggle kms_key_create is disable. | string | `""` | no |

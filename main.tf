@@ -182,6 +182,8 @@ resource "aws_iam_policy" "this_read" {
   name   = "${var.iam_policy_read_name}"
   path   = "${var.iam_policy_path}"
   policy = "${data.aws_iam_policy_document.this_read.json}"
+
+  description = "${var.iam_policy_read_description}"
 }
 
 resource "aws_iam_policy" "this_full" {
@@ -190,4 +192,6 @@ resource "aws_iam_policy" "this_full" {
   name   = "${var.iam_policy_full_name}"
   path   = "${var.iam_policy_path}"
   policy = "${data.aws_iam_policy_document.this_full.json}"
+
+  description = "${var.iam_policy_full_description}"
 }
