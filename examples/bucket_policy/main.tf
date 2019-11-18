@@ -33,19 +33,9 @@ module "standard" {
 
 data "aws_iam_policy_document" "s3" {
   statement {
-    actions = ["sts:AssumeRole"]
+    sid = "1"
 
-    principals {
-      type = "Service"
-
-      identifiers = [
-        "s3.amazonaws.com",
-      ]
-    }
-  }
-
-  statement {
-    actions = ["sts:AssumeRole"]
+    effect = "Allow"
 
     principals {
       type = "AWS"
@@ -54,5 +44,14 @@ data "aws_iam_policy_document" "s3" {
         "arn:aws:iam::744480654312:root",
       ]
     }
+
+    actions = [
+      "s3:*",
+    ]
+
+    resources = [
+      "${element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}",
+      "${element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}/*",
+    ]
   }
 }
