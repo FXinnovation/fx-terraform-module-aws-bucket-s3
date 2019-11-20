@@ -60,12 +60,8 @@ variable "kms_key_alias_name" {
   default     = ""
 }
 
-#####
-# IAM policy
-#####
-
 ####
-#  IAM Policy
+# IAM Policy
 #####
 
 variable "iam_policy_create" {

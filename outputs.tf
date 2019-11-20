@@ -3,32 +3,32 @@
 #####
 output "id" {
   description = "The name of the bucket."
-  value       = "${compact(concat(aws_s3_bucket.this.*.id, list("")))}"
+  value       = "${element(concat(aws_s3_bucket.this.*.id, list("")), 0)}"
 }
 
 output "arn" {
   description = "The ARN of the bucket. Will be of format arn:aws:s3:::bucketname."
-  value       = "${compact(concat(aws_s3_bucket.this.*.arn, list("")))}"
+  value       = "${element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}"
 }
 
 output "bucket_domain_name" {
   description = "The bucket domain name. Will be of format bucketname.s3.amazonaws.com."
-  value       = "${compact(concat(aws_s3_bucket.this.*.bucket_domain_name, list("")))}"
+  value       = "${element(concat(aws_s3_bucket.this.*.bucket_domain_name, list("")), 0)}"
 }
 
 output "bucket_regional_domain_name" {
   description = "The bucket region-specific domain name. The bucket domain name including the region name."
-  value       = "${compact(concat(aws_s3_bucket.this.*.bucket_regional_domain_name, list("")))}"
+  value       = "${element(concat(aws_s3_bucket.this.*.bucket_regional_domain_name, list("")), 0)}"
 }
 
 output "hosted_zone_id" {
   description = "The Route 53 Hosted Zone ID for this bucket's region."
-  value       = "${compact(concat(aws_s3_bucket.this.*.hosted_zone_id, list("")))}"
+  value       = "${element(concat(aws_s3_bucket.this.*.hosted_zone_id, list("")), 0)}"
 }
 
 output "region" {
   description = "The AWS region this bucket resides in."
-  value       = "${compact(concat(aws_s3_bucket.this.*.region, list("")))}"
+  value       = "${element(concat(aws_s3_bucket.this.*.region, list("")), 0)}"
 }
 
 #####
@@ -37,22 +37,22 @@ output "region" {
 
 output "kms_key_arns" {
   description = "The Amazon Resource Name (ARN) of the key"
-  value       = "${compact(concat(aws_kms_key.this.*.arn, list("")))}"
+  value       = "${element(concat(aws_kms_key.this.*.arn, list("")), 0)}"
 }
 
 output "kms_key_ids" {
   description = "Globally unique identifier for the key"
-  value       = "${compact(concat(aws_kms_key.this.*.key_id, list("")))}"
+  value       = "${element(concat(aws_kms_key.this.*.key_id, list("")), 0)}"
 }
 
 output "kms_alias_arns" {
   description = "The Amazon Resource Name (ARN) of the key alias"
-  value       = "${compact(concat(aws_kms_alias.this.*.arn, list("")))}"
+  value       = "${element(concat(aws_kms_alias.this.*.arn, list("")), 0)}"
 }
 
 output "kms_alias_target_key_arn" {
   description = "The Amazon Resource Name (ARN) of the target key identifier"
-  value       = "${compact(concat(aws_kms_alias.this.*.target_key_arn, list("")))}"
+  value       = "${element(concat(aws_kms_alias.this.*.target_key_arn, list("")), 0)}"
 }
 
 #####
