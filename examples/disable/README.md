@@ -1,4 +1,4 @@
-# S3 bucket Standard exemple
+# S3 bucket module disable exemple
 
 Disable S3 bucket module.
 

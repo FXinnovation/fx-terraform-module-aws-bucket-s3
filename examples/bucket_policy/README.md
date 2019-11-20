@@ -1,4 +1,4 @@
-# S3 bucket Standard exemple
+# S3 bucket with bucket policy exemple
 
 Create S3 bucket, KMS key, and the policies. Also insert a bucket policy.
 

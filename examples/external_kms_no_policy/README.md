@@ -1,4 +1,4 @@
-# S3 bucket Standard exemple
+# S3 bucket with external kms key exemple
 
 Create S3 bucket, using and external kms key, without policies creation
 
