@@ -42,7 +42,7 @@ variable "object_lock_enabled" {
 }
 
 variable "object_lock_mode" {
-  description = "he default Object Lock retention mode you want to apply to new objects placed in this bucket. Valid values are 'GOVERNANCE' and 'COMPLIANCE'"
+  description = "The default Object Lock retention mode you want to apply to new objects placed in this bucket. Valid values are 'GOVERNANCE' and 'COMPLIANCE'"
   default     = "COMPLIANCE"
 }
 
