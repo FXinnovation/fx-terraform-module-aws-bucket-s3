@@ -31,6 +31,26 @@ variable "bucket_policy_json" {
   default     = ""
 }
 
+variable "versioning" {
+  description = "Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket."
+  default     = "false"
+}
+
+variable "object_lock_enabled" {
+  description = "Enable object lock on this bucket"
+  default     = "false"
+}
+
+variable "object_lock_mode" {
+  description = "he default Object Lock retention mode you want to apply to new objects placed in this bucket. Valid values are 'GOVERNANCE' and 'COMPLIANCE'"
+  default     = "COMPLIANCE"
+}
+
+variable "object_lock_retention_days" {
+  description = "The number of days that you want to specify for the default retention period."
+  default     = "1"
+}
+
 #####
 # KMS key
 #####

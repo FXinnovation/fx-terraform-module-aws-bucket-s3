@@ -19,9 +19,8 @@ resource "random_string" "this" {
 module "standard" {
   source = "../../"
 
-  name                = "tftest${random_string.this.result}"
-  apply_bucket_policy = "true"
-  bucket_policy_json  = "${data.aws_iam_policy_document.s3.json}"
+  name       = "tftest${random_string.this.result}"
+  versioning = "true"
 
   kms_key_create              = true
   kms_key_name                = "tftestS3KmsKey${random_string.this.result}"
@@ -34,29 +33,5 @@ module "standard" {
 
   tags {
     testTag = "tftest"
-  }
-}
-
-data "aws_iam_policy_document" "s3" {
-  statement {
-    sid = "1"
-
-    effect = "Allow"
-
-    principals {
-      type = "AWS"
-
-      identifiers = [
-        "arn:aws:iam::744480654312:root",
-      ]
-    }
-
-    actions = [
-      "s3:*",
-    ]
-
-    resources = [
-      "${module.standard.arn}",
-    ]
   }
 }

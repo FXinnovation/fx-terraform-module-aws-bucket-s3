@@ -23,6 +23,10 @@ module "standard" {
   apply_bucket_policy = "true"
   bucket_policy_json  = "${data.aws_iam_policy_document.s3.json}"
 
+  object_lock_enabled        = "true"
+  object_lock_mode           = "COMPLIANCE"
+  object_lock_retention_days = "1"
+
   kms_key_create              = true
   kms_key_name                = "tftestS3KmsKey${random_string.this.result}"
   kms_key_alias_name          = "tftestS3KeySsm${random_string.this.result}"

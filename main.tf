@@ -3,7 +3,7 @@
 #####
 
 resource "aws_s3_bucket" "this" {
-  count = "${var.enabled ? 1 : 0}"
+  count = "${var.enabled && ! var.object_lock_enabled ? 1 : 0}"
 
   bucket = "${var.name}"
   acl    = "private"
@@ -13,6 +13,47 @@ resource "aws_s3_bucket" "this" {
       apply_server_side_encryption_by_default {
         kms_master_key_id = "${var.kms_key_create ? element(concat(aws_kms_key.this.*.arn, list("")), 0) : var.kms_key_arn}"
         sse_algorithm     = "aws:kms"
+      }
+    }
+  }
+
+  versioning {
+    enabled = "${var.versioning}"
+  }
+
+  tags = "${merge(
+    map("Terraform", "true"),
+    map("Name", "${var.name}"),
+    var.tags
+  )}"
+}
+
+resource "aws_s3_bucket" "this_object_lock" {
+  count = "${var.enabled && var.object_lock_enabled ? 1 : 0}"
+
+  bucket = "${var.name}"
+  acl    = "private"
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        kms_master_key_id = "${var.kms_key_create ? element(concat(aws_kms_key.this.*.arn, list("")), 0) : var.kms_key_arn}"
+        sse_algorithm     = "aws:kms"
+      }
+    }
+  }
+
+  versioning {
+    enabled = "true"
+  }
+
+  object_lock_configuration {
+    object_lock_enabled = "Enabled"
+
+    rule {
+      default_retention {
+        mode = "${var.object_lock_mode}"
+        days = "${var.object_lock_retention_days}"
       }
     }
   }
@@ -27,7 +68,7 @@ resource "aws_s3_bucket" "this" {
 resource "aws_s3_bucket_policy" "this" {
   count = "${var.enabled && var.apply_bucket_policy ? 1 : 0}"
 
-  bucket = "${aws_s3_bucket.this.id}"
+  bucket = "${var.object_lock_enabled ? element(concat(aws_s3_bucket.this_object_lock.*.id, list("")), 0) : element(concat(aws_s3_bucket.this.*.id, list("")), 0)}"
   policy = "${var.bucket_policy_json}"
 }
 
@@ -73,8 +114,8 @@ data "aws_iam_policy_document" "this_read" {
     ]
 
     resources = [
-      "${element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}",
-      "${element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}/*",
+      "${var.object_lock_enabled ? element(concat(aws_s3_bucket.this_object_lock.*.arn, list("")), 0) : element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}",
+      "${var.object_lock_enabled ? element(concat(aws_s3_bucket.this_object_lock.*.arn, list("")), 0) : element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}/*",
     ]
   }
 
@@ -130,8 +171,8 @@ data "aws_iam_policy_document" "this_full" {
     ]
 
     resources = [
-      "${element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}",
-      "${element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}/*",
+      "${var.object_lock_enabled ? element(concat(aws_s3_bucket.this_object_lock.*.arn, list("")), 0) : element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}",
+      "${var.object_lock_enabled ? element(concat(aws_s3_bucket.this_object_lock.*.arn, list("")), 0) : element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}/*",
     ]
   }
 
