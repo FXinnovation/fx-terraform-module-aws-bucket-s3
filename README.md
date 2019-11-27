@@ -24,7 +24,11 @@ Work *only* with terraform 0.11.x
 | kms\_key\_name | Name of the kms key if toggle kms_key_create is set | string | `""` | no |
 | kms\_tags | Tags that will be merged with variable tags for the kms key | map | `{}` | no |
 | name | The name of the bucket. | string | n/a | yes |
+| object\_lock\_enabled | Enable object lock on this bucket | string | `"false"` | no |
+| object\_lock\_mode | The default Object Lock retention mode you want to apply to new objects placed in this bucket. Valid values are 'GOVERNANCE' and 'COMPLIANCE' | string | `"COMPLIANCE"` | no |
+| object\_lock\_retention\_days | The number of days that you want to specify for the default retention period. | string | `"1"` | no |
 | tags | Global tags for resources | map | `{}` | no |
+| versioning | Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket. | string | `"false"` | no |
 
 ## Outputs
 
