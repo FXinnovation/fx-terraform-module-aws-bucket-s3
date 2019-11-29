@@ -27,7 +27,7 @@ Work *only* with terraform 0.11.x
 | object\_lock\_enabled | Enable object lock on this bucket | string | `"false"` | no |
 | object\_lock\_expiration\_days | Specifies the number of days after object creation when the specific rule action takes effect. | string | `"1"` | no |
 | object\_lock\_mode | The default Object Lock retention mode you want to apply to new objects placed in this bucket. Valid values are 'GOVERNANCE' and 'COMPLIANCE' | string | `"COMPLIANCE"` | no |
-| object\_lock\_noncurrent\_version\_expiration\_days |  | string | `"Specifies the number of days an object is noncurrent object versions expire."` | no |
+| object\_lock\_noncurrent\_version\_expiration\_days | Specifies the number of days an object is noncurrent object versions expire. | string | `"1"` | no |
 | object\_lock\_retention\_days | The number of days that you want to specify for the default retention period. | string | `"1"` | no |
 | tags | Global tags for resources | map | `{}` | no |
 | versioning | Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket. | string | `"false"` | no |

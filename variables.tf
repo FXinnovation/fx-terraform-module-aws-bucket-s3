@@ -57,8 +57,8 @@ variable "object_lock_expiration_days" {
 }
 
 variable "object_lock_noncurrent_version_expiration_days" {
-  description = ""
-  default     = "Specifies the number of days an object is noncurrent object versions expire."
+  description = "Specifies the number of days an object is noncurrent object versions expire."
+  default     = "1"
 }
 
 #####
