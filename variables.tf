@@ -51,6 +51,16 @@ variable "object_lock_retention_days" {
   default     = "1"
 }
 
+variable "object_lock_expiration_days" {
+  description = "Specifies the number of days after object creation when the specific rule action takes effect."
+  default     = "1"
+}
+
+variable "object_lock_noncurrent_version_expiration_days" {
+  description = ""
+  default     = "Specifies the number of days an object is noncurrent object versions expire."
+}
+
 #####
 # KMS key
 #####

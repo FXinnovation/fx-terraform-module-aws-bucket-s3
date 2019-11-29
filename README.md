@@ -25,7 +25,9 @@ Work *only* with terraform 0.11.x
 | kms\_tags | Tags that will be merged with variable tags for the kms key | map | `{}` | no |
 | name | The name of the bucket. | string | n/a | yes |
 | object\_lock\_enabled | Enable object lock on this bucket | string | `"false"` | no |
+| object\_lock\_expiration\_days | Specifies the number of days after object creation when the specific rule action takes effect. | string | `"1"` | no |
 | object\_lock\_mode | The default Object Lock retention mode you want to apply to new objects placed in this bucket. Valid values are 'GOVERNANCE' and 'COMPLIANCE' | string | `"COMPLIANCE"` | no |
+| object\_lock\_noncurrent\_version\_expiration\_days |  | string | `"Specifies the number of days an object is noncurrent object versions expire."` | no |
 | object\_lock\_retention\_days | The number of days that you want to specify for the default retention period. | string | `"1"` | no |
 | tags | Global tags for resources | map | `{}` | no |
 | versioning | Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket. | string | `"false"` | no |
@@ -42,10 +44,12 @@ Work *only* with terraform 0.11.x
 | iam\_policy\_full\_description | The description of the full right policy |
 | iam\_policy\_full\_id | ID of the full right policy |
 | iam\_policy\_full\_name | The name of the full right policy |
+| iam\_policy\_full\_only\_policy\_document | The policy document |
 | iam\_policy\_read\_only\_arn | ARN of the read only policy |
 | iam\_policy\_read\_only\_description | The description of the read only policy |
 | iam\_policy\_read\_only\_id | ID of the read only policy |
 | iam\_policy\_read\_only\_name | The name of the read only policy |
+| iam\_policy\_read\_only\_policy\_document | The policy document |
 | id | The name of the bucket. |
 | kms\_alias\_arns | The Amazon Resource Name (ARN) of the key alias |
 | kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |

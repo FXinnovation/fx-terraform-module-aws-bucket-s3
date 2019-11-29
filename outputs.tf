@@ -79,6 +79,11 @@ output "iam_policy_read_only_name" {
   value       = "${element(concat(aws_iam_policy.this_read.*.name,  list("")), 0)}"
 }
 
+output "iam_policy_read_only_policy_document" {
+  description = "The policy document"
+  value       = "${element(concat(aws_iam_policy.this_read.*.policy,  list("")), 0)}"
+}
+
 output "iam_policy_full_id" {
   description = "ID of the full right policy"
   value       = "${element(concat(aws_iam_policy.this_full.*.id, list("")), 0)}"
@@ -97,4 +102,9 @@ output "iam_policy_full_description" {
 output "iam_policy_full_name" {
   description = "The name of the full right policy"
   value       = "${element(concat(aws_iam_policy.this_full.*.name,  list("")), 0)}"
+}
+
+output "iam_policy_full_only_policy_document" {
+  description = "The policy document"
+  value       = "${element(concat(aws_iam_policy.this_full.*.policy,  list("")), 0)}"
 }
