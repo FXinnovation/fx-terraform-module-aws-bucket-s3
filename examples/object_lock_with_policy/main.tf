@@ -16,7 +16,7 @@ resource "random_string" "this" {
   special = false
 }
 
-module "standard" {
+module "object_lock_with_policy" {
   source = "../../"
 
   name                = "tftest${random_string.this.result}"

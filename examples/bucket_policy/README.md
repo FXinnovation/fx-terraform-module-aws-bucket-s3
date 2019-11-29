@@ -32,10 +32,12 @@ $ terraform apply
 | iam\_policy\_full\_description | The description of the full right policy |
 | iam\_policy\_full\_id | ID of the full right policy |
 | iam\_policy\_full\_name | The name of the full right policy |
+| iam\_policy\_full\_policy\_document | The policy document |
 | iam\_policy\_read\_only\_arn | ARN of the read only policy |
 | iam\_policy\_read\_only\_description | The description of the read only policy |
 | iam\_policy\_read\_only\_id | ID of the read only policy |
 | iam\_policy\_read\_only\_name | The name of the read only policy |
+| iam\_policy\_read\_only\_policy\_document | The policy document |
 | id | The name of the bucket. |
 | kms\_alias\_arns | The Amazon Resource Name (ARN) of the key alias |
 | kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
