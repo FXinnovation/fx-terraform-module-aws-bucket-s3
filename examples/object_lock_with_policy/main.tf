@@ -62,7 +62,7 @@ data "aws_iam_policy_document" "s3" {
     ]
 
     resources = [
-      "${module.standard.arn}",
+      "${module.object_lock_with_policy.arn}",
     ]
   }
 }
