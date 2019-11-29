@@ -58,6 +58,18 @@ resource "aws_s3_bucket" "this_object_lock" {
     }
   }
 
+  lifecycle_rule {
+    enabled = true
+
+    expiration {
+      days = "${var.object_lock_expiration_days}"
+    }
+
+    noncurrent_version_expiration {
+      days = "${var.object_lock_noncurrent_version_expiration_days}"
+    }
+  }
+
   tags = "${merge(
     map("Terraform", "true"),
     map("Name", "${var.name}"),

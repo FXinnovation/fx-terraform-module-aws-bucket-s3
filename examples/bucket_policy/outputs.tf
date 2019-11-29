@@ -4,32 +4,32 @@
 
 output "id" {
   description = "The name of the bucket."
-  value       = "${module.standard.id}"
+  value       = "${module.policy.id}"
 }
 
 output "arn" {
   description = "The ARN of the bucket. Will be of format arn:aws:s3:::bucketname."
-  value       = "${module.standard.arn}"
+  value       = "${module.policy.arn}"
 }
 
 output "bucket_domain_name" {
   description = "The bucket domain name. Will be of format bucketname.s3.amazonaws.com."
-  value       = "${module.standard.bucket_domain_name}"
+  value       = "${module.policy.bucket_domain_name}"
 }
 
 output "bucket_regional_domain_name" {
   description = "The bucket region-specific domain name. The bucket domain name including the region name."
-  value       = "${module.standard.bucket_regional_domain_name}"
+  value       = "${module.policy.bucket_regional_domain_name}"
 }
 
 output "hosted_zone_id" {
   description = "The Route 53 Hosted Zone ID for this bucket's region."
-  value       = "${module.standard.hosted_zone_id}"
+  value       = "${module.policy.hosted_zone_id}"
 }
 
 output "region" {
   description = "The AWS region this bucket resides in."
-  value       = "${module.standard.region}"
+  value       = "${module.policy.region}"
 }
 
 #####
@@ -38,22 +38,22 @@ output "region" {
 
 output "kms_key_arns" {
   description = "The Amazon Resource Name (ARN) of the key"
-  value       = "${module.standard.kms_key_arns}"
+  value       = "${module.policy.kms_key_arns}"
 }
 
 output "kms_key_ids" {
   description = "Globally unique identifier for the key"
-  value       = "${module.standard.kms_key_ids}"
+  value       = "${module.policy.kms_key_ids}"
 }
 
 output "kms_alias_arns" {
   description = "The Amazon Resource Name (ARN) of the key alias"
-  value       = "${module.standard.kms_alias_arns}"
+  value       = "${module.policy.kms_alias_arns}"
 }
 
 output "kms_alias_target_key_arn" {
   description = "The Amazon Resource Name (ARN) of the target key identifier"
-  value       = "${module.standard.kms_alias_target_key_arn}"
+  value       = "${module.policy.kms_alias_target_key_arn}"
 }
 
 #####
@@ -62,40 +62,50 @@ output "kms_alias_target_key_arn" {
 
 output "iam_policy_read_only_id" {
   description = "ID of the read only policy"
-  value       = "${module.standard.iam_policy_read_only_id}"
+  value       = "${module.policy.iam_policy_read_only_id}"
 }
 
 output "iam_policy_read_only_arn" {
   description = "ARN of the read only policy"
-  value       = "${module.standard.iam_policy_read_only_arn}"
+  value       = "${module.policy.iam_policy_read_only_arn}"
 }
 
 output "iam_policy_read_only_description" {
   description = "The description of the read only policy"
-  value       = "${module.standard.iam_policy_read_only_description}"
+  value       = "${module.policy.iam_policy_read_only_description}"
 }
 
 output "iam_policy_read_only_name" {
   description = "The name of the read only policy"
-  value       = "${module.standard.iam_policy_read_only_name}"
+  value       = "${module.policy.iam_policy_read_only_name}"
+}
+
+output "iam_policy_read_only_policy_document" {
+  description = "The policy document"
+  value       = "${module.policy.iam_policy_read_only_policy_document}"
 }
 
 output "iam_policy_full_id" {
   description = "ID of the full right policy"
-  value       = "${module.standard.iam_policy_full_id}"
+  value       = "${module.policy.iam_policy_full_id}"
 }
 
 output "iam_policy_full_arn" {
   description = "ARN of the full right policy"
-  value       = "${module.standard.iam_policy_full_arn}"
+  value       = "${module.policy.iam_policy_full_arn}"
 }
 
 output "iam_policy_full_description" {
   description = "The description of the full right policy"
-  value       = "${module.standard.iam_policy_full_description}"
+  value       = "${module.policy.iam_policy_full_description}"
 }
 
 output "iam_policy_full_name" {
   description = "The name of the full right policy"
-  value       = "${module.standard.iam_policy_full_name}"
+  value       = "${module.policy.iam_policy_full_name}"
+}
+
+output "iam_policy_full_policy_document" {
+  description = "The policy document"
+  value       = "${module.policy.iam_policy_full_policy_document}"
 }

@@ -16,7 +16,7 @@ resource "random_string" "this" {
   special = false
 }
 
-module "standard" {
+module "external_kms_no_policies" {
   source = "../../"
 
   name = "tftest${random_string.this.result}"

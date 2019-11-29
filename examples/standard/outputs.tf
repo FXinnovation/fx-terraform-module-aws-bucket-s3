@@ -80,6 +80,11 @@ output "iam_policy_read_only_name" {
   value       = "${module.standard.iam_policy_read_only_name}"
 }
 
+output "iam_policy_read_only_policy_document" {
+  description = "The policy document"
+  value       = "${module.standard.iam_policy_full_policy_document}"
+}
+
 output "iam_policy_full_id" {
   description = "ID of the full right policy"
   value       = "${module.standard.iam_policy_full_id}"
@@ -98,4 +103,9 @@ output "iam_policy_full_description" {
 output "iam_policy_full_name" {
   description = "The name of the full right policy"
   value       = "${module.standard.iam_policy_full_name}"
+}
+
+output "iam_policy_full_policy_document" {
+  description = "The policy document"
+  value       = "${module.standard.iam_policy_full_policy_document}"
 }

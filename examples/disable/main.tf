@@ -16,7 +16,7 @@ resource "random_string" "this" {
   special = false
 }
 
-module "standard" {
+module "disable" {
   source = "../../"
 
   enabled = "false"
