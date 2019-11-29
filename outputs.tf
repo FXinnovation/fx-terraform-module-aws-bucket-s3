@@ -104,7 +104,7 @@ output "iam_policy_full_name" {
   value       = "${element(concat(aws_iam_policy.this_full.*.name,  list("")), 0)}"
 }
 
-output "iam_policy_full_only_policy_document" {
+output "iam_policy_full_policy_document" {
   description = "The policy document"
   value       = "${element(concat(aws_iam_policy.this_full.*.policy,  list("")), 0)}"
 }

@@ -44,7 +44,7 @@ Work *only* with terraform 0.11.x
 | iam\_policy\_full\_description | The description of the full right policy |
 | iam\_policy\_full\_id | ID of the full right policy |
 | iam\_policy\_full\_name | The name of the full right policy |
-| iam\_policy\_full\_only\_policy\_document | The policy document |
+| iam\_policy\_full\_policy\_document | The policy document |
 | iam\_policy\_read\_only\_arn | ARN of the read only policy |
 | iam\_policy\_read\_only\_description | The description of the read only policy |
 | iam\_policy\_read\_only\_id | ID of the read only policy |

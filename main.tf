@@ -59,7 +59,6 @@ resource "aws_s3_bucket" "this_object_lock" {
   }
 
   lifecycle_rule {
-    prefix  = "*"
     enabled = true
 
     expiration {

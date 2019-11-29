@@ -82,7 +82,7 @@ output "iam_policy_read_only_name" {
 
 output "iam_policy_read_only_policy_document" {
   description = "The policy document"
-  value       = "${module.policy.iam_policy_read_only_policy_document}"
+  value       = "${module.disable.iam_policy_read_only_policy_document}"
 }
 
 output "iam_policy_full_id" {
