@@ -90,6 +90,16 @@ variable "kms_key_alias_name" {
   default     = ""
 }
 
+variable "apply_kms_policy" {
+  description = "Apply the policy `kms_key_policy_json` to the kms key. Valid only if toggle kms_key_create is set."
+  default     = "false"
+}
+
+variable "kms_key_policy_json" {
+  description = "A valid policy JSON document."
+  default     = ""
+}
+
 ####
 # IAM Policy
 #####

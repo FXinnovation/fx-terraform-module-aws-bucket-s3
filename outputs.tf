@@ -37,12 +37,12 @@ output "region" {
 
 output "kms_key_arns" {
   description = "The Amazon Resource Name (ARN) of the key"
-  value       = "${element(concat(aws_kms_key.this.*.arn, list("")), 0)}"
+  value       = "${element(concat(compact(concat(aws_kms_key.this.*.arn, aws_kms_key.this_policy.*.arn)), list("")), 0)}"
 }
 
 output "kms_key_ids" {
   description = "Globally unique identifier for the key"
-  value       = "${element(concat(aws_kms_key.this.*.key_id, list("")), 0)}"
+  value       = "${element(concat(compact(concat(aws_kms_key.this.*.key_id, aws_kms_key.this_policy.*.key_id)), list("")), 0)}"
 }
 
 output "kms_alias_arns" {

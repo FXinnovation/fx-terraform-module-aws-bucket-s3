@@ -26,6 +26,8 @@ module "policy" {
   kms_key_create              = true
   kms_key_name                = "tftestS3KmsKey${random_string.this.result}"
   kms_key_alias_name          = "tftestS3KeySsm${random_string.this.result}"
+  apply_kms_policy            = "true"
+  kms_key_policy_json         = "${data.aws_iam_policy_document.kms.json}"
   iam_policy_create           = true
   iam_policy_read_name        = "tftestPolicyReadS3${random_string.this.result}"
   iam_policy_read_description = "tftest description"
@@ -57,6 +59,52 @@ data "aws_iam_policy_document" "s3" {
 
     resources = [
       "${module.policy.arn}",
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "kms" {
+  statement {
+    sid = "1"
+
+    effect = "Allow"
+
+    principals {
+      type = "AWS"
+
+      identifiers = [
+        "arn:aws:iam::700633540182:root",
+      ]
+    }
+
+    actions = [
+      "kms:*",
+    ]
+
+    resources = [
+      "*",
+    ]
+  }
+
+  statement {
+    sid = "2"
+
+    effect = "Allow"
+
+    principals {
+      type = "AWS"
+
+      identifiers = [
+        "arn:aws:iam::203977111394:root",
+      ]
+    }
+
+    actions = [
+      "kms:Decrypt",
+    ]
+
+    resources = [
+      "*",
     ]
   }
 }
