@@ -91,7 +91,7 @@ variable "kms_key_alias_name" {
 }
 
 variable "apply_kms_policy" {
-  description = "Apply the policy `kms_policy_json` to the kms key. Valid only if toggle kms_key_create is set."
+  description = "Apply the policy `kms_key_policy_json` to the kms key. Valid only if toggle kms_key_create is set."
   default     = "false"
 }
 
