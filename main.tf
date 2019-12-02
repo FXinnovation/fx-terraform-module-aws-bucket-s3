@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "this" {
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
-        kms_master_key_id = "${var.kms_key_create ? element(concat(aws_kms_key.this.*.arn, list("")), 0) : var.kms_key_arn}"
+        kms_master_key_id = "${var.kms_key_create ? element(concat(compact(concat(aws_kms_key.this.*.arn, aws_kms_key.this_policy.*.arn)), list("")), 0) : var.kms_key_arn}"
         sse_algorithm     = "aws:kms"
       }
     }
@@ -37,7 +37,7 @@ resource "aws_s3_bucket" "this_object_lock" {
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
-        kms_master_key_id = "${var.kms_key_create ? element(concat(aws_kms_key.this.*.arn, list("")), 0) : var.kms_key_arn}"
+        kms_master_key_id = "${var.kms_key_create ? element(concat(compact(concat(aws_kms_key.this.*.arn, aws_kms_key.this_policy.*.arn)), list("")), 0) : var.kms_key_arn}"
         sse_algorithm     = "aws:kms"
       }
     }
@@ -89,8 +89,22 @@ resource "aws_s3_bucket_policy" "this" {
 #####
 
 resource "aws_kms_key" "this" {
-  count = "${var.enabled && var.kms_key_create ? 1 : 0}"
+  count = "${var.enabled && var.kms_key_create && !var.apply_kms_policy ? 1 : 0}"
 
+  description = "KMS Key for ${var.name} S3 encryption."
+
+  tags = "${merge(
+    map("Terraform", "true"),
+    map("Name", var.kms_key_name),
+    var.tags,
+    var.kms_tags
+  )}"
+}
+
+resource "aws_kms_key" "this_policy" {
+  count = "${var.enabled && var.kms_key_create && var.apply_kms_policy ? 1 : 0}"
+
+  policy      = "${var.kms_key_policy_json}"
   description = "KMS Key for ${var.name} S3 encryption."
 
   tags = "${merge(
@@ -105,7 +119,7 @@ resource "aws_kms_alias" "this" {
   count = "${var.enabled && var.kms_key_create ? 1 : 0}"
 
   name          = "alias/${var.kms_key_alias_name}"
-  target_key_id = "${aws_kms_key.this.key_id}"
+  target_key_id = "${element(compact(concat(aws_kms_key.this.*.key_id, aws_kms_key.this_policy.*.key_id)), 0)}"
 }
 
 #####
@@ -141,7 +155,7 @@ data "aws_iam_policy_document" "this_read" {
     ]
 
     resources = [
-      "${var.kms_key_create ? element(concat(aws_kms_key.this.*.arn, list("")), 0) : var.kms_key_arn}",
+      "${var.kms_key_create ? element(concat(compact(concat(aws_kms_key.this.*.arn, aws_kms_key.this_policy.*.arn)), list("")), 0) : var.kms_key_arn}",
     ]
   }
 
@@ -200,7 +214,7 @@ data "aws_iam_policy_document" "this_full" {
     ]
 
     resources = [
-      "${var.kms_key_create ? element(concat(aws_kms_key.this.*.arn, list("")), 0) : var.kms_key_arn}",
+      "${var.kms_key_create ? element(concat(compact(concat(aws_kms_key.this.*.arn, aws_kms_key.this_policy.*.arn)), list("")), 0) : var.kms_key_arn}",
     ]
   }
 

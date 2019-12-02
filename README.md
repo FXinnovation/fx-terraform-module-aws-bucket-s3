@@ -10,6 +10,7 @@ Work *only* with terraform 0.11.x
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | apply\_bucket\_policy | Apply the policy 'bucket_policy_json' to the bucket | string | `"false"` | no |
+| apply\_kms\_policy | Apply the policy `kms_policy_json` to the kms key. Valid only if toggle kms_key_create is set. | string | `"false"` | no |
 | bucket\_policy\_json | A valid bucket policy JSON document if 'apply_bucket_policy' is enable. | string | `""` | no |
 | enabled | Enable this module | string | `"true"` | no |
 | iam\_policy\_create | Create read only and read write policy to get an access to S3 bucket. | string | `"false"` | no |
@@ -22,6 +23,7 @@ Work *only* with terraform 0.11.x
 | kms\_key\_arn | ARN of the kms key if toggle kms_key_create is disable. | string | `""` | no |
 | kms\_key\_create | Create a kms key for secure string parameters. | string | `"false"` | no |
 | kms\_key\_name | Name of the kms key if toggle kms_key_create is set | string | `""` | no |
+| kms\_key\_policy\_json | A valid policy JSON document. | string | `""` | no |
 | kms\_tags | Tags that will be merged with variable tags for the kms key | map | `{}` | no |
 | name | The name of the bucket. | string | n/a | yes |
 | object\_lock\_enabled | Enable object lock on this bucket | string | `"false"` | no |
