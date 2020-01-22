@@ -17,8 +17,34 @@ variable "tags" {
 #####
 
 variable "name" {
-  description = "The name of the bucket."
-  type        = "string"
+  description = "Name of the bucket to create."
+  type        = string
+}
+
+variable "acl" {
+  description = "The canned ACL to apply."
+  default     = "private"
+}
+
+variable "force_destroy" {
+  description = "When set to true, will delete the bucket even if it is not empty."
+  default     = false
+}
+
+variable "region" {
+  description = "If specified, the AWS region this bucket should reside in. Otherwise, the region used by the caller."
+  type        = string
+  default     = null
+}
+
+variable "bucket_tags" {
+  description = "Map of tags that will be added on the bucket object."
+  default     = {}
+}
+
+variable "request_payer" {
+  description = "Specifies who should bear the cost of Amazon S3 data transfer. Can be either BucketOwner or Requester"
+  default     = "BucketOwner"
 }
 
 variable "apply_bucket_policy" {
@@ -31,34 +57,110 @@ variable "bucket_policy_json" {
   default     = ""
 }
 
-variable "versioning" {
-  description = "Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket."
-  default     = "false"
+variable "sse_config" {
+  description = "Configures server side encryption for the bucket.  The sse_key should either be set to S3 or a KMS Key ID"
+  type = list(object({
+    sse_key = string
+  }))
+  default = []
 }
 
-variable "object_lock_enabled" {
-  description = "Enable object lock on this bucket"
-  default     = "false"
+variable "versioning_config" {
+  description = "Configure versioning on bucket object.  Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket"
+  type        = list(map(string))
+  default     = []
 }
 
-variable "object_lock_mode" {
-  description = "The default Object Lock retention mode you want to apply to new objects placed in this bucket. Valid values are 'GOVERNANCE' and 'COMPLIANCE'"
-  default     = "COMPLIANCE"
+variable "static_website_config" {
+  description = "A data structure that configures the bucket to host a static website"
+  type        = list(map(string))
+  default     = []
 }
 
-variable "object_lock_retention_days" {
-  description = "The number of days that you want to specify for the default retention period."
-  default     = "1"
+variable "cors_rules" {
+  description = "A data structure that configures CORS rules"
+  type = list(object({
+    allowed_headers = list(string)
+    allowed_methods = list(string)
+    allowed_origins = list(string)
+    expose_headers  = list(string)
+    max_age_seconds = number
+  }))
+  default = []
 }
 
-variable "object_lock_expiration_days" {
-  description = "Specifies the number of days after object creation when the specific rule action takes effect."
-  default     = "1"
+variable "lifecycle_rules" {
+  description = "A data structure to create lifcycle rules"
+  type = list(object({
+    id                                     = string
+    prefix                                 = string
+    tags                                   = map(string)
+    enabled                                = bool
+    abort_incomplete_multipart_upload_days = number
+    expiration_config = list(object({
+      days                         = number
+      expired_object_delete_marker = bool
+    }))
+    noncurrent_version_expiration_config = list(object({
+      days = number
+    }))
+    transitions_config = list(object({
+      days          = number
+      storage_class = string
+    }))
+    noncurrent_version_transitions_config = list(object({
+      days          = number
+      storage_class = string
+    }))
+  }))
+  default = []
 }
 
-variable "object_lock_noncurrent_version_expiration_days" {
-  description = "Specifies the number of days an object is noncurrent object versions expire."
-  default     = "1"
+variable "logging" {
+  description = "Configure logging on bucket object."
+  type = list(object({
+    target_bucket = string
+    target_prefix = string
+  }))
+  default = []
+}
+
+variable "object_lock_configuration" {
+  description = "Configure an object lock configuration on the bucket object."
+  type = list(object({
+    object_lock_enabled = string
+    rule_config = list(object({
+      mode  = string
+      days  = number
+      years = number
+    }))
+
+  }))
+  default = []
+}
+
+variable "block_public_acls" {
+  description = "Whether Amazon S3 should block public ACLs for this bucket."
+  type        = bool
+  default     = false
+}
+
+variable "block_public_policy" {
+  description = "Whether Amazon S3 should block public bucket policies for this bucket."
+  type        = bool
+  default     = false
+}
+
+variable "ignore_public_acls" {
+  description = "Whether Amazon S3 should ignore public ACLs for this bucket."
+  type        = bool
+  default     = false
+}
+
+variable "restrict_public_buckets" {
+  description = "Whether Amazon S3 should restrict public bucket policies for this bucket."
+  type        = bool
+  default     = false
 }
 
 #####

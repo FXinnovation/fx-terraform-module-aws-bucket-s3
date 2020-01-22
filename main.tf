@@ -3,85 +3,164 @@
 #####
 
 resource "aws_s3_bucket" "this" {
-  count = "${var.enabled && ! var.object_lock_enabled ? 1 : 0}"
+  count = var.enabled ? 1 : 0
 
-  bucket = "${var.name}"
-  acl    = "private"
+  bucket        = var.name
+  acl           = var.acl
+  force_destroy = var.force_destroy
+  region        = var.region
+  request_payer = var.request_payer
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        kms_master_key_id = "${var.kms_key_create ? element(concat(compact(concat(aws_kms_key.this.*.arn, aws_kms_key.this_policy.*.arn)), list("")), 0) : var.kms_key_arn}"
-        sse_algorithm     = "aws:kms"
+  dynamic "server_side_encryption_configuration" {
+    for_each = var.sse_config
+
+    content {
+      rule {
+        apply_server_side_encryption_by_default {
+          sse_algorithm     = server_side_encryption_configuration.value.sse_key == "S3" ? "AES256" : "aws:kms"
+          kms_master_key_id = server_side_encryption_configuration.value.sse_key == "S3" ? "" : server_side_encryption_configuration.value.sse_key
+        }
       }
     }
   }
 
-  versioning {
-    enabled = "${var.versioning}"
+  dynamic "versioning" {
+    for_each = var.versioning_config
+
+    content {
+      enabled    = lookup(versioning.value, "enabled", false)
+      mfa_delete = lookup(versioning.value, "mfa_delete", false)
+    }
   }
 
-  tags = "${merge(
-    map("Terraform", "true"),
-    map("Name", "${var.name}"),
-    var.tags
-  )}"
-}
+  dynamic "lifecycle_rule" {
+    for_each = var.lifecycle_rules
 
-resource "aws_s3_bucket" "this_object_lock" {
-  count = "${var.enabled && var.object_lock_enabled ? 1 : 0}"
+    content {
+      id      = lifecycle_rule.value.id
+      prefix  = lifecycle_rule.value.prefix
+      tags    = lifecycle_rule.value.tags
+      enabled = lifecycle_rule.value.enabled
 
-  bucket = "${var.name}"
-  acl    = "private"
+      abort_incomplete_multipart_upload_days = lifecycle_rule.value.abort_incomplete_multipart_upload_days
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        kms_master_key_id = "${var.kms_key_create ? element(concat(compact(concat(aws_kms_key.this.*.arn, aws_kms_key.this_policy.*.arn)), list("")), 0) : var.kms_key_arn}"
-        sse_algorithm     = "aws:kms"
+      dynamic "expiration" {
+        for_each = lifecycle_rule.value.expiration_config
+
+        content {
+          days                         = expiration.value.days
+          expired_object_delete_marker = expiration.value.expired_object_delete_marker
+        }
+      }
+
+      dynamic "noncurrent_version_expiration" {
+        for_each = lifecycle_rule.value.noncurrent_version_expiration_config
+
+        content {
+          days = noncurrent_version_expiration.value.days
+        }
+      }
+
+      dynamic "transition" {
+        for_each = lifecycle_rule.value.transitions_config
+
+        content {
+          days          = transition.value.days
+          storage_class = transition.value.storage_class
+        }
+      }
+
+      dynamic "noncurrent_version_transition" {
+        for_each = lifecycle_rule.value.noncurrent_version_transitions_config
+
+        content {
+          days          = noncurrent_version_transition.value.days
+          storage_class = noncurrent_version_transition.value.storage_class
+        }
       }
     }
   }
 
-  versioning {
-    enabled = "true"
+  dynamic "website" {
+    for_each = var.static_website_config
+
+    content {
+      index_document           = lookup(website.value, "index_document", null)
+      error_document           = lookup(website.value, "error_document", null)
+      redirect_all_requests_to = lookup(website.value, "redirect_all_requests_to", null)
+      routing_rules            = lookup(website.value, "routing_rules", null)
+    }
   }
 
-  object_lock_configuration {
-    object_lock_enabled = "Enabled"
+  dynamic "cors_rule" {
+    for_each = var.cors_rules
 
-    rule {
-      default_retention {
-        mode = "${var.object_lock_mode}"
-        days = "${var.object_lock_retention_days}"
+    content {
+      allowed_headers = cors_rule.value.allowed_headers
+      allowed_methods = cors_rule.value.allowed_methods
+      allowed_origins = cors_rule.value.allowed_origins
+      expose_headers  = cors_rule.value.expose_headers
+      max_age_seconds = cors_rule.value.max_age_seconds
+    }
+  }
+
+  dynamic "logging" {
+    for_each = var.logging
+
+    content {
+      target_bucket = logging.value.target_bucket
+      target_prefix = logging.value.target_prefix
+    }
+  }
+
+  dynamic "object_lock_configuration" {
+    for_each = var.object_lock_configuration
+
+    content {
+      object_lock_enabled = object_lock_configuration.value.object_lock_enabled
+
+      dynamic "rule" {
+        for_each = object_lock_configuration.value.rule_config
+
+        content {
+          default_retention {
+            mode  = rule.value.mode
+            days  = lookup(rule.value, "days", null)
+            years = lookup(rule.value, "years", null)
+          }
+        }
       }
     }
   }
 
-  lifecycle_rule {
-    enabled = true
-
-    expiration {
-      days = "${var.object_lock_expiration_days}"
-    }
-
-    noncurrent_version_expiration {
-      days = "${var.object_lock_noncurrent_version_expiration_days}"
-    }
-  }
-
-  tags = "${merge(
-    map("Terraform", "true"),
-    map("Name", "${var.name}"),
-    var.tags
-  )}"
+  tags = merge(
+    {
+      "Terraform" = "true",
+      "Name"      = var.name
+    },
+    var.bucket_tags,
+    var.tags,
+  )
 }
 
 resource "aws_s3_bucket_policy" "this" {
-  count = "${var.enabled && var.apply_bucket_policy ? 1 : 0}"
+  count = var.enabled && var.apply_bucket_policy ? 1 : 0
 
-  bucket = "${var.object_lock_enabled ? element(concat(aws_s3_bucket.this_object_lock.*.id, list("")), 0) : element(concat(aws_s3_bucket.this.*.id, list("")), 0)}"
-  policy = "${var.bucket_policy_json}"
+  bucket = element(concat(aws_s3_bucket.this.*.id, [""]), 0)
+  policy = var.bucket_policy_json
+}
+
+resource "aws_s3_bucket_public_access_block" "this" {
+  count = var.enabled ? 1 : 0
+
+  bucket = aws_s3_bucket.this[0].id
+
+  block_public_acls       = var.block_public_acls
+  block_public_policy     = var.block_public_policy
+  ignore_public_acls      = var.ignore_public_acls
+  restrict_public_buckets = var.restrict_public_buckets
+
+  depends_on = [aws_s3_bucket.this, aws_s3_bucket_policy.this]
 }
 
 #####
@@ -89,37 +168,26 @@ resource "aws_s3_bucket_policy" "this" {
 #####
 
 resource "aws_kms_key" "this" {
-  count = "${var.enabled && var.kms_key_create && !var.apply_kms_policy ? 1 : 0}"
+  count = var.enabled && var.kms_key_create ? 1 : 0
 
   description = "KMS Key for ${var.name} S3 encryption."
+  policy      = var.kms_key_policy_json
 
-  tags = "${merge(
-    map("Terraform", "true"),
-    map("Name", var.kms_key_name),
+  tags = merge(
+    {
+      "Terraform" = "true",
+      "Name"      = var.kms_key_name
+    },
     var.tags,
-    var.kms_tags
-  )}"
-}
-
-resource "aws_kms_key" "this_policy" {
-  count = "${var.enabled && var.kms_key_create && var.apply_kms_policy ? 1 : 0}"
-
-  policy      = "${var.kms_key_policy_json}"
-  description = "KMS Key for ${var.name} S3 encryption."
-
-  tags = "${merge(
-    map("Terraform", "true"),
-    map("Name", var.kms_key_name),
-    var.tags,
-    var.kms_tags
-  )}"
+    var.kms_tags,
+  )
 }
 
 resource "aws_kms_alias" "this" {
-  count = "${var.enabled && var.kms_key_create ? 1 : 0}"
+  count = var.enabled && var.kms_key_create ? 1 : 0
 
   name          = "alias/${var.kms_key_alias_name}"
-  target_key_id = "${element(compact(concat(aws_kms_key.this.*.key_id, aws_kms_key.this_policy.*.key_id)), 0)}"
+  target_key_id = element(concat(aws_kms_key.this.*.key_id, [""]), 0)
 }
 
 #####
@@ -127,7 +195,7 @@ resource "aws_kms_alias" "this" {
 #####
 
 data "aws_iam_policy_document" "this_read" {
-  count = "${var.enabled && var.iam_policy_create ? 1 : 0}"
+  count = var.enabled && var.iam_policy_create ? 1 : 0
 
   statement {
     sid = "1"
@@ -140,8 +208,8 @@ data "aws_iam_policy_document" "this_read" {
     ]
 
     resources = [
-      "${var.object_lock_enabled ? element(concat(aws_s3_bucket.this_object_lock.*.arn, list("")), 0) : element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}",
-      "${var.object_lock_enabled ? element(concat(aws_s3_bucket.this_object_lock.*.arn, list("")), 0) : element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}/*",
+      element(concat(aws_s3_bucket.this.*.arn, [""]), 0),
+      "${element(concat(aws_s3_bucket.this.*.arn, [""]), 0)}/*",
     ]
   }
 
@@ -155,7 +223,7 @@ data "aws_iam_policy_document" "this_read" {
     ]
 
     resources = [
-      "${var.kms_key_create ? element(concat(compact(concat(aws_kms_key.this.*.arn, aws_kms_key.this_policy.*.arn)), list("")), 0) : var.kms_key_arn}",
+      var.kms_key_create ? element(concat(aws_kms_key.this.*.arn, [""]), 0) : var.kms_key_arn,
     ]
   }
 
@@ -185,7 +253,7 @@ data "aws_iam_policy_document" "this_read" {
 }
 
 data "aws_iam_policy_document" "this_full" {
-  count = "${var.enabled && var.iam_policy_create ? 1 : 0}"
+  count = var.enabled && var.iam_policy_create ? 1 : 0
 
   statement {
     sid = "1"
@@ -197,8 +265,8 @@ data "aws_iam_policy_document" "this_full" {
     ]
 
     resources = [
-      "${var.object_lock_enabled ? element(concat(aws_s3_bucket.this_object_lock.*.arn, list("")), 0) : element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}",
-      "${var.object_lock_enabled ? element(concat(aws_s3_bucket.this_object_lock.*.arn, list("")), 0) : element(concat(aws_s3_bucket.this.*.arn, list("")), 0)}/*",
+      element(concat(aws_s3_bucket.this.*.arn, [""]), 0),
+      "${element(concat(aws_s3_bucket.this.*.arn, [""]), 0)}/*",
     ]
   }
 
@@ -214,7 +282,7 @@ data "aws_iam_policy_document" "this_full" {
     ]
 
     resources = [
-      "${var.kms_key_create ? element(concat(compact(concat(aws_kms_key.this.*.arn, aws_kms_key.this_policy.*.arn)), list("")), 0) : var.kms_key_arn}",
+      var.kms_key_create ? element(concat(aws_kms_key.this.*.arn, [""]), 0) : var.kms_key_arn,
     ]
   }
 
@@ -244,21 +312,21 @@ data "aws_iam_policy_document" "this_full" {
 }
 
 resource "aws_iam_policy" "this_read" {
-  count = "${var.enabled && var.iam_policy_create ? 1 : 0}"
+  count = var.enabled && var.iam_policy_create ? 1 : 0
 
-  name   = "${var.iam_policy_read_name}"
-  path   = "${var.iam_policy_path}"
-  policy = "${data.aws_iam_policy_document.this_read.json}"
+  name   = var.iam_policy_read_name
+  path   = var.iam_policy_path
+  policy = data.aws_iam_policy_document.this_read[0].json
 
-  description = "${var.iam_policy_read_description}"
+  description = var.iam_policy_read_description
 }
 
 resource "aws_iam_policy" "this_full" {
-  count = "${var.enabled && var.iam_policy_create ? 1 : 0}"
+  count = var.enabled && var.iam_policy_create ? 1 : 0
 
-  name   = "${var.iam_policy_full_name}"
-  path   = "${var.iam_policy_path}"
-  policy = "${data.aws_iam_policy_document.this_full.json}"
+  name   = var.iam_policy_full_name
+  path   = var.iam_policy_path
+  policy = data.aws_iam_policy_document.this_full[0].json
 
-  description = "${var.iam_policy_full_description}"
+  description = var.iam_policy_full_description
 }

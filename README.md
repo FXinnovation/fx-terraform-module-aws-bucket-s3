@@ -9,30 +9,40 @@ Work *only* with terraform 0.11.x
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| apply\_bucket\_policy | Apply the policy 'bucket_policy_json' to the bucket | string | `"false"` | no |
-| apply\_kms\_policy | Apply the policy `kms_key_policy_json` to the kms key. Valid only if toggle kms_key_create is set. | string | `"false"` | no |
-| bucket\_policy\_json | A valid bucket policy JSON document if 'apply_bucket_policy' is enable. | string | `""` | no |
+| acl | The canned ACL to apply. | string | `"private"` | no |
+| apply\_bucket\_policy | Apply the policy 'bucket\_policy\_json' to the bucket | string | `"false"` | no |
+| apply\_kms\_policy | Apply the policy `kms\_key\_policy\_json` to the kms key. Valid only if toggle kms\_key\_create is set. | string | `"false"` | no |
+| block\_public\_acls | Whether Amazon S3 should block public ACLs for this bucket. | bool | `"false"` | no |
+| block\_public\_policy | Whether Amazon S3 should block public bucket policies for this bucket. | bool | `"false"` | no |
+| bucket\_policy\_json | A valid bucket policy JSON document if 'apply\_bucket\_policy' is enable. | string | `""` | no |
+| bucket\_tags | Map of tags that will be added on the bucket object. | map | `{}` | no |
+| cors\_rules | A data structure that configures CORS rules | object | `[]` | no |
 | enabled | Enable this module | string | `"true"` | no |
+| force\_destroy | When set to true, will delete the bucket even if it is not empty. | string | `"false"` | no |
 | iam\_policy\_create | Create read only and read write policy to get an access to S3 bucket. | string | `"false"` | no |
 | iam\_policy\_full\_description | Description of the IAM full policy. | string | `""` | no |
 | iam\_policy\_full\_name | Name of the IAM read write access to S3 bucket. | string | `""` | no |
 | iam\_policy\_path | Path in which to create the policies. | string | `"/"` | no |
 | iam\_policy\_read\_description | Description of the IAM read policy. | string | `""` | no |
 | iam\_policy\_read\_name | Name of the IAM read only access to S3 bucket. | string | `""` | no |
-| kms\_key\_alias\_name | Alias of the kms key if toggle kms_key_create is set | string | `""` | no |
-| kms\_key\_arn | ARN of the kms key if toggle kms_key_create is disable. | string | `""` | no |
+| ignore\_public\_acls | Whether Amazon S3 should ignore public ACLs for this bucket. | bool | `"false"` | no |
+| kms\_key\_alias\_name | Alias of the kms key if toggle kms\_key\_create is set | string | `""` | no |
+| kms\_key\_arn | ARN of the kms key if toggle kms\_key\_create is disable. | string | `""` | no |
 | kms\_key\_create | Create a kms key for secure string parameters. | string | `"false"` | no |
-| kms\_key\_name | Name of the kms key if toggle kms_key_create is set | string | `""` | no |
+| kms\_key\_name | Name of the kms key if toggle kms\_key\_create is set | string | `""` | no |
 | kms\_key\_policy\_json | A valid policy JSON document. | string | `""` | no |
 | kms\_tags | Tags that will be merged with variable tags for the kms key | map | `{}` | no |
-| name | The name of the bucket. | string | n/a | yes |
-| object\_lock\_enabled | Enable object lock on this bucket | string | `"false"` | no |
-| object\_lock\_expiration\_days | Specifies the number of days after object creation when the specific rule action takes effect. | string | `"1"` | no |
-| object\_lock\_mode | The default Object Lock retention mode you want to apply to new objects placed in this bucket. Valid values are 'GOVERNANCE' and 'COMPLIANCE' | string | `"COMPLIANCE"` | no |
-| object\_lock\_noncurrent\_version\_expiration\_days | Specifies the number of days an object is noncurrent object versions expire. | string | `"1"` | no |
-| object\_lock\_retention\_days | The number of days that you want to specify for the default retention period. | string | `"1"` | no |
+| lifecycle\_rules | A data structure to create lifcycle rules | object | `[]` | no |
+| logging | Configure logging on bucket object. | object | `[]` | no |
+| name | Name of the bucket to create. | string | n/a | yes |
+| object\_lock\_configuration | Configure an object lock configuration on the bucket object. | object | `[]` | no |
+| region | If specified, the AWS region this bucket should reside in. Otherwise, the region used by the caller. | string | `"null"` | no |
+| request\_payer | Specifies who should bear the cost of Amazon S3 data transfer. Can be either BucketOwner or Requester | string | `"BucketOwner"` | no |
+| restrict\_public\_buckets | Whether Amazon S3 should restrict public bucket policies for this bucket. | bool | `"false"` | no |
+| sse\_config | Configures server side encryption for the bucket.  The sse\_key should either be set to S3 or a KMS Key ID | object | `[]` | no |
+| static\_website\_config | A data structure that configures the bucket to host a static website | list(map(string)) | `[]` | no |
 | tags | Global tags for resources | map | `{}` | no |
-| versioning | Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket. | string | `"false"` | no |
+| versioning\_config | Configure versioning on bucket object.  Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket | list(map(string)) | `[]` | no |
 
 ## Outputs
 
@@ -53,10 +63,10 @@ Work *only* with terraform 0.11.x
 | iam\_policy\_read\_only\_name | The name of the read only policy |
 | iam\_policy\_read\_only\_policy\_document | The policy document |
 | id | The name of the bucket. |
-| kms\_alias\_arns | The Amazon Resource Name (ARN) of the key alias |
-| kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
-| kms\_key\_arns | The Amazon Resource Name (ARN) of the key |
-| kms\_key\_ids | Globally unique identifier for the key |
+| kms\_alias\_arn | The Amazon Resource Name \(ARN\) of the key alias |
+| kms\_alias\_target\_key\_arn | The Amazon Resource Name \(ARN\) of the target key identifier |
+| kms\_key\_arn | The Amazon Resource Name \(ARN\) of the key |
+| kms\_key\_id | Globally unique identifier for the key |
 | region | The AWS region this bucket resides in. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
