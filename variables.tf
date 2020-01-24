@@ -61,6 +61,31 @@ variable "object_lock_noncurrent_version_expiration_days" {
   default     = "1"
 }
 
+variable "transition_enabled" {
+  description = "Enable object lock and transition on this bucket"
+  default     = "false"
+}
+
+variable "transition_days" {
+  description = "Specifies the number of days after object creation when the specific rule action takes effect."
+  default     = "pleasedefine"
+}
+
+variable "transition_storageclass" {
+  description = "Specifies the Amazon S3 storage class to which you want the object to transition. Can be ONEZONE_IA, STANDARD_IA, INTELLIGENT_TIERING, GLACIER, or DEEP_ARCHIVE."
+  default     = "pleasedefine"
+}
+
+variable "transition_noncurrent_version_days" {
+  description = "For non current version objects: Specifies the number of days after object creation when the specific rule action takes effect."
+  default     = "pleasedefine"
+}
+
+variable "transition_noncurrent_version_storageclass" {
+  description = "For non current version objects: Specifies the Amazon S3 storage class to which you want the object to transition. Can be ONEZONE_IA, STANDARD_IA, INTELLIGENT_TIERING, GLACIER, or DEEP_ARCHIVE."
+  default     = "pleasedefine"
+}
+
 #####
 # KMS key
 #####

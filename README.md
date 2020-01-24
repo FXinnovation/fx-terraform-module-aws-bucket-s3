@@ -1,6 +1,7 @@
 # terraform-module-aws-s3-bucket
 
 Generic module create a S3 bucket, kms encrypted, with 2 base policies that allow read only and full right access.
+Can manage one transition (cf [example transition](examples/transition/main.tf)).
 
 Work *only* with terraform 0.11.x
 
@@ -32,6 +33,11 @@ Work *only* with terraform 0.11.x
 | object\_lock\_noncurrent\_version\_expiration\_days | Specifies the number of days an object is noncurrent object versions expire. | string | `"1"` | no |
 | object\_lock\_retention\_days | The number of days that you want to specify for the default retention period. | string | `"1"` | no |
 | tags | Global tags for resources | map | `{}` | no |
+| transition\_days | Specifies the number of days after object creation when the specific rule action takes effect. | string | `"pleasedefine"` | no |
+| transition\_enabled | Enable object lock and transition on this bucket | string | `"false"` | no |
+| transition\_noncurrent\_version\_days | For non current version objects: Specifies the number of days after object creation when the specific rule action takes effect. | string | `"pleasedefine"` | no |
+| transition\_noncurrent\_version\_storageclass | For non current version objects: Specifies the Amazon S3 storage class to which you want the object to transition. Can be ONEZONE_IA, STANDARD_IA, INTELLIGENT_TIERING, GLACIER, or DEEP_ARCHIVE. | string | `"pleasedefine"` | no |
+| transition\_storageclass | Specifies the Amazon S3 storage class to which you want the object to transition. Can be ONEZONE_IA, STANDARD_IA, INTELLIGENT_TIERING, GLACIER, or DEEP_ARCHIVE. | string | `"pleasedefine"` | no |
 | versioning | Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket. | string | `"false"` | no |
 
 ## Outputs

@@ -1,34 +1,89 @@
 #####
 # S3 bucket
 #####
+
 output "id" {
   description = "The name of the bucket."
-  value       = "${element(concat(compact(concat(aws_s3_bucket.this.*.id, aws_s3_bucket.this_object_lock.*.id)), list("")), 0)}"
+
+  value = "${element(concat(
+      aws_s3_bucket.this.*.id,
+      aws_s3_bucket.this_object_lock.*.id,
+      aws_s3_bucket.this_transition.*.id,
+      aws_s3_bucket.this_transition_lock.*.id,
+      list(""),
+    ),
+    0
+  )}"
 }
 
 output "arn" {
   description = "The ARN of the bucket. Will be of format arn:aws:s3:::bucketname."
-  value       = "${element(concat(compact(concat(aws_s3_bucket.this.*.arn, aws_s3_bucket.this_object_lock.*.arn)), list("")), 0)}"
+
+  value = "${element(concat(
+      aws_s3_bucket.this.*.arn,
+      aws_s3_bucket.this_object_lock.*.arn,
+      aws_s3_bucket.this_transition.*.arn,
+      aws_s3_bucket.this_transition_lock.*.arn,
+      list(""),
+    ),
+    0
+  )}"
 }
 
 output "bucket_domain_name" {
   description = "The bucket domain name. Will be of format bucketname.s3.amazonaws.com."
-  value       = "${element(concat(compact(concat(aws_s3_bucket.this.*.bucket_domain_name, aws_s3_bucket.this_object_lock.*.bucket_domain_name)), list("")), 0)}"
+
+  value = "${element(concat(
+      aws_s3_bucket.this.*.bucket_domain_name,
+      aws_s3_bucket.this_object_lock.*.bucket_domain_name,
+      aws_s3_bucket.this_transition.*.bucket_domain_name,
+      aws_s3_bucket.this_transition_lock.*.bucket_domain_name,
+      list(""),
+    ),
+    0
+  )}"
 }
 
 output "bucket_regional_domain_name" {
   description = "The bucket region-specific domain name. The bucket domain name including the region name."
-  value       = "${element(concat(compact(concat(aws_s3_bucket.this.*.bucket_regional_domain_name, aws_s3_bucket.this_object_lock.*.bucket_regional_domain_name)), list("")), 0)}"
+
+  value = "${element(concat(
+      aws_s3_bucket.this.*.bucket_regional_domain_name,
+      aws_s3_bucket.this_object_lock.*.bucket_regional_domain_name,
+      aws_s3_bucket.this_transition.*.bucket_regional_domain_name,
+      aws_s3_bucket.this_transition_lock.*.bucket_regional_domain_name,
+      list(""),
+    ),
+    0
+  )}"
 }
 
 output "hosted_zone_id" {
   description = "The Route 53 Hosted Zone ID for this bucket's region."
-  value       = "${element(concat(compact(concat(aws_s3_bucket.this.*.hosted_zone_id, aws_s3_bucket.this_object_lock.*.hosted_zone_id)), list("")), 0)}"
+
+  value = "${element(concat(
+      aws_s3_bucket.this.*.hosted_zone_id,
+      aws_s3_bucket.this_object_lock.*.hosted_zone_id,
+      aws_s3_bucket.this_transition.*.hosted_zone_id,
+      aws_s3_bucket.this_transition_lock.*.hosted_zone_id,
+      list(""),
+    ),
+    0
+  )}"
 }
 
 output "region" {
   description = "The AWS region this bucket resides in."
-  value       = "${element(concat(compact(concat(aws_s3_bucket.this.*.region, aws_s3_bucket.this_object_lock.*.region)), list("")), 0)}"
+
+  value = "${element(concat(
+      aws_s3_bucket.this.*.region,
+      aws_s3_bucket.this_object_lock.*.region,
+      aws_s3_bucket.this_transition.*.region,
+      aws_s3_bucket.this_transition_lock.*.region,
+      list(""),
+    ),
+    0
+  )}"
 }
 
 #####

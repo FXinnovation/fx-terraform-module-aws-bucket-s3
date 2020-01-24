@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.1
+
+* Add (one) transition suport.
+
 ## 0.4.0
 
 * Add policy suport on KMS key.
