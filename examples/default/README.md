@@ -13,12 +13,19 @@ $ terraform apply
 ```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | ~> 2 |
+| random | n/a |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| access\_key | Credentials: AWS access key. | string | n/a | yes |
-| secret\_key | Credentials: AWS secret key. Pass this as a variable, never write password in the code. | string | n/a | yes |
+|------|-------------|------|---------|:-----:|
+| access\_key | Credentials: AWS access key. | `string` | n/a | yes |
+| secret\_key | Credentials: AWS secret key. Pass this as a variable, never write password in the code. | `string` | n/a | yes |
 
 ## Outputs
 
@@ -39,9 +46,9 @@ $ terraform apply
 | bp\_iam\_policy\_read\_only\_name | The name of the read only policy |
 | bp\_iam\_policy\_read\_only\_policy\_document | The policy document |
 | bp\_id | The name of the bucket. |
-| bp\_kms\_alias\_arn | The Amazon Resource Name \(ARN\) of the key alias |
-| bp\_kms\_alias\_target\_key\_arn | The Amazon Resource Name \(ARN\) of the target key identifier |
-| bp\_kms\_key\_arn | The Amazon Resource Name \(ARN\) of the key |
+| bp\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias |
+| bp\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
+| bp\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | bp\_kms\_key\_id | Globally unique identifier for the key |
 | bp\_region | The AWS region this bucket resides in. |
 | disabled\_arn | The ARN of the bucket. Will be of format arn:aws:s3:::bucketname. |
@@ -59,9 +66,9 @@ $ terraform apply
 | disabled\_iam\_policy\_read\_only\_name | The name of the read only policy |
 | disabled\_iam\_policy\_read\_only\_policy\_document | The policy document |
 | disabled\_id | The name of the bucket. |
-| disabled\_kms\_alias\_arn | The Amazon Resource Name \(ARN\) of the key alias |
-| disabled\_kms\_alias\_target\_key\_arn | The Amazon Resource Name \(ARN\) of the target key identifier |
-| disabled\_kms\_key\_arn | The Amazon Resource Name \(ARN\) of the key |
+| disabled\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias |
+| disabled\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
+| disabled\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | disabled\_kms\_key\_id | Globally unique identifier for the key |
 | disabled\_region | The AWS region this bucket resides in. |
 | extkms\_arn | The ARN of the bucket. Will be of format arn:aws:s3:::bucketname. |
@@ -79,9 +86,9 @@ $ terraform apply
 | extkms\_iam\_policy\_read\_only\_name | The name of the read only policy |
 | extkms\_iam\_policy\_read\_only\_policy\_document | The policy document |
 | extkms\_id | The name of the bucket. |
-| extkms\_kms\_alias\_arn | The Amazon Resource Name \(ARN\) of the key alias |
-| extkms\_kms\_alias\_target\_key\_arn | The Amazon Resource Name \(ARN\) of the target key identifier |
-| extkms\_kms\_key\_arn | The Amazon Resource Name \(ARN\) of the key |
+| extkms\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias |
+| extkms\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
+| extkms\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | extkms\_kms\_key\_id | Globally unique identifier for the key |
 | extkms\_region | The AWS region this bucket resides in. |
 | logging\_arn | The ARN of the bucket. Will be of format arn:aws:s3:::bucketname. |
@@ -102,9 +109,9 @@ $ terraform apply
 | logging\_destination\_iam\_policy\_read\_only\_name | The name of the read only policy |
 | logging\_destination\_iam\_policy\_read\_only\_policy\_document | The policy document |
 | logging\_destination\_id | The name of the bucket. |
-| logging\_destination\_kms\_alias\_arn | The Amazon Resource Name \(ARN\) of the key alias |
-| logging\_destination\_kms\_alias\_target\_key\_arn | The Amazon Resource Name \(ARN\) of the target key identifier |
-| logging\_destination\_kms\_key\_arn | The Amazon Resource Name \(ARN\) of the key |
+| logging\_destination\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias |
+| logging\_destination\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
+| logging\_destination\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | logging\_destination\_kms\_key\_id | Globally unique identifier for the key |
 | logging\_destination\_region | The AWS region this bucket resides in. |
 | logging\_hosted\_zone\_id | The Route 53 Hosted Zone ID for this bucket's region. |
@@ -119,9 +126,9 @@ $ terraform apply
 | logging\_iam\_policy\_read\_only\_name | The name of the read only policy |
 | logging\_iam\_policy\_read\_only\_policy\_document | The policy document |
 | logging\_id | The name of the bucket. |
-| logging\_kms\_alias\_arn | The Amazon Resource Name \(ARN\) of the key alias |
-| logging\_kms\_alias\_target\_key\_arn | The Amazon Resource Name \(ARN\) of the target key identifier |
-| logging\_kms\_key\_arn | The Amazon Resource Name \(ARN\) of the key |
+| logging\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias |
+| logging\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
+| logging\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | logging\_kms\_key\_id | Globally unique identifier for the key |
 | logging\_region | The AWS region this bucket resides in. |
 | olwp\_arn | The ARN of the bucket. Will be of format arn:aws:s3:::bucketname. |
@@ -139,9 +146,9 @@ $ terraform apply
 | olwp\_iam\_policy\_read\_only\_name | The name of the read only policy |
 | olwp\_iam\_policy\_read\_only\_policy\_document | The policy document |
 | olwp\_id | The name of the bucket. |
-| olwp\_kms\_alias\_arn | The Amazon Resource Name \(ARN\) of the key alias |
-| olwp\_kms\_alias\_target\_key\_arn | The Amazon Resource Name \(ARN\) of the target key identifier |
-| olwp\_kms\_key\_arn | The Amazon Resource Name \(ARN\) of the key |
+| olwp\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias |
+| olwp\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
+| olwp\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | olwp\_kms\_key\_id | Globally unique identifier for the key |
 | olwp\_region | The AWS region this bucket resides in. |
 | standard\_arn | The ARN of the bucket. Will be of format arn:aws:s3:::bucketname. |
@@ -159,9 +166,9 @@ $ terraform apply
 | standard\_iam\_policy\_read\_only\_name | The name of the read only policy |
 | standard\_iam\_policy\_read\_only\_policy\_document | The policy document |
 | standard\_id | The name of the bucket. |
-| standard\_kms\_alias\_arn | The Amazon Resource Name \(ARN\) of the key alias |
-| standard\_kms\_alias\_target\_key\_arn | The Amazon Resource Name \(ARN\) of the target key identifier |
-| standard\_kms\_key\_arn | The Amazon Resource Name \(ARN\) of the key |
+| standard\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias |
+| standard\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
+| standard\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | standard\_kms\_key\_id | Globally unique identifier for the key |
 | standard\_region | The AWS region this bucket resides in. |
 | static\_website\_arn | The ARN of the bucket. Will be of format arn:aws:s3:::bucketname. |
@@ -179,9 +186,9 @@ $ terraform apply
 | static\_website\_iam\_policy\_read\_only\_name | The name of the read only policy |
 | static\_website\_iam\_policy\_read\_only\_policy\_document | The policy document |
 | static\_website\_id | The name of the bucket. |
-| static\_website\_kms\_alias\_arn | The Amazon Resource Name \(ARN\) of the key alias |
-| static\_website\_kms\_alias\_target\_key\_arn | The Amazon Resource Name \(ARN\) of the target key identifier |
-| static\_website\_kms\_key\_arn | The Amazon Resource Name \(ARN\) of the key |
+| static\_website\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias |
+| static\_website\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
+| static\_website\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | static\_website\_kms\_key\_id | Globally unique identifier for the key |
 | static\_website\_region | The AWS region this bucket resides in. |
 
