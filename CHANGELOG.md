@@ -1,4 +1,9 @@
 
+1.0.2 / 2020-03-21
+==================
+
+  * fix: wrong IAM polices when default bucket KMS key is used
+
 1.0.1 / 2020-01-24
 ==================
 

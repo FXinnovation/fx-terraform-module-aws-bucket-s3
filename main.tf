@@ -18,7 +18,7 @@ resource "aws_s3_bucket" "this" {
       rule {
         apply_server_side_encryption_by_default {
           sse_algorithm     = server_side_encryption_configuration.value.sse_key == "S3" ? "AES256" : "aws:kms"
-          kms_master_key_id = server_side_encryption_configuration.value.sse_key == "S3" ? "" : server_side_encryption_configuration.value.sse_key
+          kms_master_key_id = server_side_encryption_configuration.value.sse_key == "S3" ? null : server_side_encryption_configuration.value.sse_key
         }
       }
     }
@@ -194,9 +194,14 @@ resource "aws_kms_alias" "this" {
 # IAM policy
 #####
 
-data "aws_iam_policy_document" "this_read_no_kms" {
-  count = var.enabled && var.iam_policy_create && var.kms_key_arn == "" && ! var.kms_key_create ? 1 : 0
+locals {
+  kms_key_needed = var.kms_key_create || (element(concat(var.sse_config.*.sse_key, [""]), 0) != "S3" && element(concat(var.sse_config.*.sse_key, [""]), 0) != "")
+}
 
+data "aws_iam_policy_document" "this_read" {
+  count = var.enabled && var.iam_policy_create ? 1 : 0
+
+  source_json = local.kms_key_needed ? element(concat(data.aws_iam_policy_document.this_read_kms.*.json, [""]), 0) : null
   statement {
     sid = "1"
 
@@ -226,27 +231,10 @@ data "aws_iam_policy_document" "this_read_no_kms" {
   }
 }
 
-data "aws_iam_policy_document" "this_read" {
-  count = var.enabled && var.iam_policy_create && (var.kms_key_create || var.kms_key_arn != "") ? 1 : 0
-
+data "aws_iam_policy_document" "this_read_kms" {
+  count = var.enabled && var.iam_policy_create && local.kms_key_needed ? 1 : 0
   statement {
-    sid = "1"
-
-    effect = "Allow"
-
-    actions = [
-      "s3:Get*",
-      "s3:List*",
-    ]
-
-    resources = [
-      element(concat(aws_s3_bucket.this.*.arn, [""]), 0),
-      "${element(concat(aws_s3_bucket.this.*.arn, [""]), 0)}/*",
-    ]
-  }
-
-  statement {
-    sid = "2"
+    sid = "3"
 
     effect = "Allow"
 
@@ -257,18 +245,6 @@ data "aws_iam_policy_document" "this_read" {
     resources = [
       var.kms_key_create ? element(concat(aws_kms_key.this.*.arn, [""]), 0) : var.kms_key_arn,
     ]
-  }
-
-  statement {
-    sid = "3"
-
-    effect = "Allow"
-
-    actions = [
-      "s3:ListAllMyBuckets",
-    ]
-
-    resources = ["*"]
   }
 
   statement {
@@ -284,9 +260,10 @@ data "aws_iam_policy_document" "this_read" {
   }
 }
 
-data "aws_iam_policy_document" "this_full_no_kms" {
-  count = var.enabled && var.iam_policy_create && var.kms_key_arn == "" && ! var.kms_key_create ? 1 : 0
+data "aws_iam_policy_document" "this_full" {
+  count = var.enabled && var.iam_policy_create ? 1 : 0
 
+  source_json = local.kms_key_needed ? element(concat(data.aws_iam_policy_document.this_full_kms.*.json, [""]), 0) : null
   statement {
     sid = "1"
 
@@ -315,26 +292,11 @@ data "aws_iam_policy_document" "this_full_no_kms" {
   }
 }
 
-data "aws_iam_policy_document" "this_full" {
-  count = var.enabled && var.iam_policy_create && (var.kms_key_create || var.kms_key_arn != "") ? 1 : 0
+data "aws_iam_policy_document" "this_full_kms" {
+  count = var.enabled && var.iam_policy_create && local.kms_key_needed ? 1 : 0
 
   statement {
-    sid = "1"
-
-    effect = "Allow"
-
-    actions = [
-      "s3:*",
-    ]
-
-    resources = [
-      element(concat(aws_s3_bucket.this.*.arn, [""]), 0),
-      "${element(concat(aws_s3_bucket.this.*.arn, [""]), 0)}/*",
-    ]
-  }
-
-  statement {
-    sid = "2"
+    sid = "3"
 
     effect = "Allow"
 
@@ -347,18 +309,6 @@ data "aws_iam_policy_document" "this_full" {
     resources = [
       var.kms_key_create ? element(concat(aws_kms_key.this.*.arn, [""]), 0) : var.kms_key_arn,
     ]
-  }
-
-  statement {
-    sid = "3"
-
-    effect = "Allow"
-
-    actions = [
-      "s3:ListAllMyBuckets",
-    ]
-
-    resources = ["*"]
   }
 
   statement {
@@ -379,7 +329,7 @@ resource "aws_iam_policy" "this_read" {
 
   name   = var.iam_policy_read_name
   path   = var.iam_policy_path
-  policy = var.kms_key_create || var.kms_key_arn != "" ? data.aws_iam_policy_document.this_read[0].json : data.aws_iam_policy_document.this_read_no_kms[0].json
+  policy = data.aws_iam_policy_document.this_read[0].json
 
   description = var.iam_policy_read_description
 }
@@ -389,7 +339,7 @@ resource "aws_iam_policy" "this_full" {
 
   name   = var.iam_policy_full_name
   path   = var.iam_policy_path
-  policy = var.kms_key_create || var.kms_key_arn != "" ? data.aws_iam_policy_document.this_full[0].json : data.aws_iam_policy_document.this_full_no_kms[0].json
+  policy = data.aws_iam_policy_document.this_full[0].json
 
   description = var.iam_policy_full_description
 }

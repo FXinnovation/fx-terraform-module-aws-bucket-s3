@@ -35,7 +35,7 @@ data "aws_iam_policy_document" "kms" {
       type = "AWS"
 
       identifiers = [
-        "arn:aws:iam::700633540182:root",
+        data.aws_caller_identity.current.arn,
       ]
     }
 

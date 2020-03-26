@@ -8,9 +8,10 @@ module "logging_destination" {
   name = "tftestloggingdest${random_string.this.result}"
   acl  = "log-delivery-write"
 
-  kms_key_create              = true
-  kms_key_name                = "tftestloggingdest${random_string.this.result}"
-  kms_key_alias_name          = "tftestloggingdest${random_string.this.result}"
+  kms_key_create = false
+  sse_config = [{
+    sse_key = "S3"
+  }]
   iam_policy_create           = true
   iam_policy_read_name        = "tftestloggingdestread${random_string.this.result}"
   iam_policy_read_description = "tftest description"
