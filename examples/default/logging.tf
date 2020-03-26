@@ -28,9 +28,6 @@ module "logging" {
 
   name = "tftestlogging${random_string.this.result}"
 
-  kms_key_create              = true
-  kms_key_name                = "tftestlogging${random_string.this.result}"
-  kms_key_alias_name          = "tftestlogging${random_string.this.result}"
   iam_policy_create           = true
   iam_policy_read_name        = "tftestloggingread${random_string.this.result}"
   iam_policy_read_description = "tftest description"
