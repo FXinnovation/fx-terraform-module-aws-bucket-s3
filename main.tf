@@ -153,7 +153,7 @@ resource "aws_s3_bucket_policy" "this" {
 resource "aws_s3_bucket_public_access_block" "this" {
   count = var.enabled ? 1 : 0
 
-  bucket = aws_s3_bucket.this[0].id
+  bucket = element(concat(aws_s3_bucket.this.*.id, [""]), 0)
 
   block_public_acls       = var.block_public_acls
   block_public_policy     = var.block_public_policy

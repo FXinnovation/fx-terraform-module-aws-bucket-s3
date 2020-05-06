@@ -5,6 +5,12 @@ Generic module create a S3 bucket, kms encrypted, with 2 base policies that allo
 Work *only* with terraform 0.11.x
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+
 ## Providers
 
 | Name | Version |
@@ -14,7 +20,7 @@ Work *only* with terraform 0.11.x
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | acl | The canned ACL to apply. | `string` | `"private"` | no |
 | apply\_bucket\_policy | Apply the policy 'bucket\_policy\_json' to the bucket | `string` | `"false"` | no |
 | apply\_kms\_policy | Apply the policy `kms_key_policy_json` to the kms key. Valid only if toggle kms\_key\_create is set. | `string` | `"false"` | no |
@@ -42,7 +48,7 @@ Work *only* with terraform 0.11.x
 | logging | Configure logging on bucket object. | <pre>list(object({<br>    target_bucket = string<br>    target_prefix = string<br>  }))</pre> | `[]` | no |
 | name | Name of the bucket to create. | `string` | n/a | yes |
 | object\_lock\_configuration | Configure an object lock configuration on the bucket object. | <pre>list(object({<br>    object_lock_enabled = string<br>    rule_config = list(object({<br>      mode  = string<br>      days  = number<br>      years = number<br>    }))<br><br>  }))</pre> | `[]` | no |
-| region | If specified, the AWS region this bucket should reside in. Otherwise, the region used by the caller. | `string` | n/a | yes |
+| region | If specified, the AWS region this bucket should reside in. Otherwise, the region used by the caller. | `string` | `null` | no |
 | request\_payer | Specifies who should bear the cost of Amazon S3 data transfer. Can be either BucketOwner or Requester | `string` | `"BucketOwner"` | no |
 | restrict\_public\_buckets | Whether Amazon S3 should restrict public bucket policies for this bucket. | `bool` | `false` | no |
 | sse\_config | Configures server side encryption for the bucket.  The sse\_key should either be set to S3 or a KMS Key ID | <pre>list(object({<br>    sse_key = string<br>  }))</pre> | `[]` | no |
