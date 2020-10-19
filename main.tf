@@ -5,8 +5,9 @@
 resource "aws_s3_bucket" "this" {
   count = "${var.enabled && !var.object_lock_enabled && !var.transition_enabled ? 1 : 0}"
 
-  bucket = "${var.name}"
-  acl    = "private"
+  bucket        = "${var.name}"
+  acl           = "private"
+  force_destroy = "${var.force_destroy}"
 
   server_side_encryption_configuration {
     rule {
@@ -31,8 +32,9 @@ resource "aws_s3_bucket" "this" {
 resource "aws_s3_bucket" "this_object_lock" {
   count = "${var.enabled && var.object_lock_enabled && !var.transition_enabled ? 1 : 0}"
 
-  bucket = "${var.name}"
-  acl    = "private"
+  bucket        = "${var.name}"
+  acl           = "private"
+  force_destroy = "${var.force_destroy}"
 
   server_side_encryption_configuration {
     rule {
@@ -80,8 +82,9 @@ resource "aws_s3_bucket" "this_object_lock" {
 resource "aws_s3_bucket" "this_transition_lock" {
   count = "${var.enabled && var.object_lock_enabled && var.transition_enabled ? 1 : 0}"
 
-  bucket = "${var.name}"
-  acl    = "private"
+  bucket        = "${var.name}"
+  acl           = "private"
+  force_destroy = "${var.force_destroy}"
 
   server_side_encryption_configuration {
     rule {
@@ -139,8 +142,9 @@ resource "aws_s3_bucket" "this_transition_lock" {
 resource "aws_s3_bucket" "this_transition" {
   count = "${var.enabled && !var.object_lock_enabled && var.transition_enabled ? 1 : 0}"
 
-  bucket = "${var.name}"
-  acl    = "private"
+  bucket        = "${var.name}"
+  acl           = "private"
+  force_destroy = "${var.force_destroy}"
 
   server_side_encryption_configuration {
     rule {

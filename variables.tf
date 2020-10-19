@@ -86,6 +86,11 @@ variable "transition_noncurrent_version_storageclass" {
   default     = "pleasedefine"
 }
 
+variable "force_destroy" {
+  description = "When set to true, will delete the bucket even if it is not empty."
+  default     = false
+}
+
 #####
 # KMS key
 #####

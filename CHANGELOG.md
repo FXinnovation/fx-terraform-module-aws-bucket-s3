@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.0
+
+* feat: add `force_destroy` option
+
 ## 0.4.1
 
 * Add (one) transition suport.
