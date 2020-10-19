@@ -26,14 +26,14 @@ Work *only* with terraform 0.11.x
 | kms\_key\_create | Create a kms key for secure string parameters. | string | `"false"` | no |
 | kms\_key\_name | Name of the kms key if toggle kms_key_create is set | string | `""` | no |
 | kms\_key\_policy\_json | A valid policy JSON document. | string | `""` | no |
-| kms\_tags | Tags that will be merged with variable tags for the kms key | map | `{}` | no |
+| kms\_tags | Tags that will be merged with variable tags for the kms key | map | `<map>` | no |
 | name | The name of the bucket. | string | n/a | yes |
 | object\_lock\_enabled | Enable object lock on this bucket | string | `"false"` | no |
 | object\_lock\_expiration\_days | Specifies the number of days after object creation when the specific rule action takes effect. | string | `"1"` | no |
 | object\_lock\_mode | The default Object Lock retention mode you want to apply to new objects placed in this bucket. Valid values are 'GOVERNANCE' and 'COMPLIANCE' | string | `"COMPLIANCE"` | no |
 | object\_lock\_noncurrent\_version\_expiration\_days | Specifies the number of days an object is noncurrent object versions expire. | string | `"1"` | no |
 | object\_lock\_retention\_days | The number of days that you want to specify for the default retention period. | string | `"1"` | no |
-| tags | Global tags for resources | map | `{}` | no |
+| tags | Global tags for resources | map | `<map>` | no |
 | transition\_days | Specifies the number of days after object creation when the specific rule action takes effect. | string | `"pleasedefine"` | no |
 | transition\_enabled | Enable object lock and transition on this bucket | string | `"false"` | no |
 | transition\_noncurrent\_version\_days | For non current version objects: Specifies the number of days after object creation when the specific rule action takes effect. | string | `"pleasedefine"` | no |

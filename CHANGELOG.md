@@ -3,6 +3,7 @@
 ## 0.5.0
 
 * feat: add `force_destroy` option
+* chore: updates .pre-commit hooks
 
 ## 0.4.1
 
