@@ -49,7 +49,6 @@ Work *only* with terraform 0.11.x
 | logging | Configure logging on bucket object. | <pre>list(object({<br>    target_bucket = string<br>    target_prefix = string<br>  }))</pre> | `[]` | no |
 | name | Name of the bucket to create. | `string` | n/a | yes |
 | object\_lock\_configuration | Configure an object lock configuration on the bucket object. | <pre>list(object({<br>    object_lock_enabled = string<br>    rule_config = list(object({<br>      mode  = string<br>      days  = number<br>      years = number<br>    }))<br><br>  }))</pre> | `[]` | no |
-| region | If specified, the AWS region this bucket should reside in. Otherwise, the region used by the caller. | `string` | `null` | no |
 | request\_payer | Specifies who should bear the cost of Amazon S3 data transfer. Can be either BucketOwner or Requester | `string` | `"BucketOwner"` | no |
 | restrict\_public\_buckets | Whether Amazon S3 should restrict public bucket policies for this bucket. | `bool` | `false` | no |
 | sse\_config | Configures server side encryption for the bucket.  The sse\_key should either be set to S3 or a KMS Key ID | <pre>list(object({<br>    sse_key = string<br>  }))</pre> | `[]` | no |

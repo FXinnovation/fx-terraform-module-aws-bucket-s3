@@ -31,12 +31,6 @@ variable "force_destroy" {
   default     = false
 }
 
-variable "region" {
-  description = "If specified, the AWS region this bucket should reside in. Otherwise, the region used by the caller."
-  type        = string
-  default     = null
-}
-
 variable "bucket_tags" {
   description = "Map of tags that will be added on the bucket object."
   default     = {}

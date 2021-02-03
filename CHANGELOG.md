@@ -1,7 +1,9 @@
-1.0.4 / 2021-02-03
+2.0.0 / 2021-02-03
 ===============================
 
-  * fix: permit aws provider up to version 3
+  * fix: (BREAKING) remove region from bucket definition (needed for aws provider > 3) and `variables.tf`
+  * fix: permit aws provider > 3
+  * fix: count on data resources (unbreak when the KMS key is used inside `sse_config`)
   * chore: bump pre-commit hooks to fix jenkins test
 
 1.0.3 / 2020-05-06

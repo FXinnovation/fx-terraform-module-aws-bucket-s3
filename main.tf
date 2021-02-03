@@ -8,7 +8,6 @@ resource "aws_s3_bucket" "this" {
   bucket        = var.name
   acl           = var.acl
   force_destroy = var.force_destroy
-  region        = var.region
   request_payer = var.request_payer
 
   dynamic "server_side_encryption_configuration" {
