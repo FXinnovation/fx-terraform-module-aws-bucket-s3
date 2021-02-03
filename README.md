@@ -10,12 +10,13 @@ Work *only* with terraform 0.11.x
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12 |
+| aws | >= 2, < 4 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
+| aws | >= 2, < 4 |
 
 ## Inputs
 

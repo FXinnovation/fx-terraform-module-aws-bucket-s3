@@ -1,6 +1,7 @@
-x.x.x (unreleased) / 2020-11-16
+1.0.4 / 2021-02-03
 ===============================
 
+  * fix: permit aws provider up to version 3
   * chore: bump pre-commit hooks to fix jenkins test
 
 1.0.3 / 2020-05-06
