@@ -231,7 +231,7 @@ data "aws_iam_policy_document" "this_read" {
 }
 
 data "aws_iam_policy_document" "this_read_kms" {
-  count = var.enabled && var.iam_policy_create && local.kms_key_needed ? 1 : 0
+  count = var.enabled && var.iam_policy_create ? 1 : 0
   statement {
     sid = "3"
 
@@ -292,7 +292,7 @@ data "aws_iam_policy_document" "this_full" {
 }
 
 data "aws_iam_policy_document" "this_full_kms" {
-  count = var.enabled && var.iam_policy_create && local.kms_key_needed ? 1 : 0
+  count = var.enabled && var.iam_policy_create ? 1 : 0
 
   statement {
     sid = "3"
