@@ -60,6 +60,7 @@ No Modules.
 | kms\_key\_create | Create a kms key for secure string parameters. | `bool` | `false` | no |
 | kms\_key\_name | Name of the kms key if toggle kms\_key\_create is set | `string` | `""` | no |
 | kms\_key\_policy\_json | A valid policy JSON document. | `string` | `""` | no |
+| kms\_key\_rotation\_enabled | Choose whether key rotation is enabled. Highly recommended. | `bool` | `true` | no |
 | kms\_tags | Tags that will be merged with variable tags for the kms key | `map` | `{}` | no |
 | lifecycle\_rules | A data structure to create lifcycle rules | <pre>list(object({<br>    id                                     = string<br>    prefix                                 = string<br>    tags                                   = map(string)<br>    enabled                                = bool<br>    abort_incomplete_multipart_upload_days = number<br>    expiration_config = list(object({<br>      days                         = number<br>      expired_object_delete_marker = bool<br>    }))<br>    noncurrent_version_expiration_config = list(object({<br>      days = number<br>    }))<br>    transitions_config = list(object({<br>      days          = number<br>      storage_class = string<br>    }))<br>    noncurrent_version_transitions_config = list(object({<br>      days          = number<br>      storage_class = string<br>    }))<br>  }))</pre> | `[]` | no |
 | logging | Configure logging on bucket object. | <pre>list(object({<br>    target_bucket = string<br>    target_prefix = string<br>  }))</pre> | `[]` | no |

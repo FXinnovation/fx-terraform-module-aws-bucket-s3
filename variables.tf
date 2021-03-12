@@ -176,6 +176,12 @@ variable "kms_key_name" {
   default     = ""
 }
 
+variable "kms_key_rotation_enabled" {
+  description = "Choose whether key rotation is enabled. Highly recommended."
+  type        = bool
+  default     = true
+}
+
 variable "kms_tags" {
   description = "Tags that will be merged with variable tags for the kms key"
   default     = {}

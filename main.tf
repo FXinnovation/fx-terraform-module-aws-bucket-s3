@@ -169,8 +169,9 @@ resource "aws_s3_bucket_public_access_block" "this" {
 resource "aws_kms_key" "this" {
   count = var.enabled && var.kms_key_create ? 1 : 0
 
-  description = "KMS Key for ${var.name} S3 encryption."
-  policy      = var.kms_key_policy_json
+  description         = "KMS Key for ${var.name} S3 encryption."
+  policy              = var.kms_key_policy_json
+  enable_key_rotation = var.kms_key_rotation_enabled
 
   tags = merge(
     {
