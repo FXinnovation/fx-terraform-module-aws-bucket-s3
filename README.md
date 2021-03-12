@@ -9,14 +9,30 @@ Work *only* with terraform 0.11.x
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12 |
-| aws | >= 2 |
+| terraform | >= 0.13 |
+| aws | >= 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 2 |
+| aws | >= 3.0 |
+
+## Modules
+
+No Modules.
+
+## Resources
+
+| Name |
+|------|
+| [aws_iam_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) |
+| [aws_iam_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) |
+| [aws_kms_alias](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_alias) |
+| [aws_kms_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) |
+| [aws_s3_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) |
+| [aws_s3_bucket_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy) |
+| [aws_s3_bucket_public_access_block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block) |
 
 ## Inputs
 
@@ -80,5 +96,4 @@ Work *only* with terraform 0.11.x
 | kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | kms\_key\_id | Globally unique identifier for the key |
 | region | The AWS region this bucket resides in. |
-
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

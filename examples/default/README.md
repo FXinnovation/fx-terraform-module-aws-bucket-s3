@@ -27,6 +27,29 @@ $ terraform apply
 | aws | >= 2 |
 | random | n/a |
 
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| disable | ../../ |  |
+| external_kms_no_policies | ../../ |  |
+| logging | ../../ |  |
+| logging_destination | ../../ |  |
+| object_lock_with_policy | ../../ |  |
+| policy | ../../ |  |
+| standard | ../../ |  |
+| static_website | ../../ |  |
+
+## Resources
+
+| Name |
+|------|
+| [aws_caller_identity](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) |
+| [aws_iam_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) |
+| [aws_kms_alias](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_alias) |
+| [aws_kms_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) |
+| [random_string](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -198,5 +221,4 @@ $ terraform apply
 | static\_website\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | static\_website\_kms\_key\_id | Globally unique identifier for the key |
 | static\_website\_region | The AWS region this bucket resides in. |
-
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
