@@ -33,10 +33,12 @@ $ terraform apply
 |------|--------|---------|
 | disable | ../../ |  |
 | external_kms_no_policies | ../../ |  |
+| external_kms_no_policies_no_kms_rotation | ../../ |  |
 | logging | ../../ |  |
 | logging_destination | ../../ |  |
 | object_lock_with_policy | ../../ |  |
 | policy | ../../ |  |
+| policy_no_kms_rotation | ../../ |  |
 | standard | ../../ |  |
 | static_website | ../../ |  |
 
@@ -80,6 +82,26 @@ $ terraform apply
 | bp\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
 | bp\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | bp\_kms\_key\_id | Globally unique identifier for the key |
+| bp\_no\_rotation\_arn | The ARN of the bucket. Will be of format arn:aws:s3:::bucketname. |
+| bp\_no\_rotation\_bucket\_domain\_name | The bucket domain name. Will be of format bucketname.s3.amazonaws.com. |
+| bp\_no\_rotation\_bucket\_regional\_domain\_name | The bucket region-specific domain name. The bucket domain name including the region name. |
+| bp\_no\_rotation\_hosted\_zone\_id | The Route 53 Hosted Zone ID for this bucket's region. |
+| bp\_no\_rotation\_iam\_policy\_full\_arn | ARN of the full right policy |
+| bp\_no\_rotation\_iam\_policy\_full\_description | The description of the full right policy |
+| bp\_no\_rotation\_iam\_policy\_full\_id | ID of the full right policy |
+| bp\_no\_rotation\_iam\_policy\_full\_name | The name of the full right policy |
+| bp\_no\_rotation\_iam\_policy\_full\_policy\_document | The policy document |
+| bp\_no\_rotation\_iam\_policy\_read\_only\_arn | ARN of the read only policy |
+| bp\_no\_rotation\_iam\_policy\_read\_only\_description | The description of the read only policy |
+| bp\_no\_rotation\_iam\_policy\_read\_only\_id | ID of the read only policy |
+| bp\_no\_rotation\_iam\_policy\_read\_only\_name | The name of the read only policy |
+| bp\_no\_rotation\_iam\_policy\_read\_only\_policy\_document | The policy document |
+| bp\_no\_rotation\_id | The name of the bucket. |
+| bp\_no\_rotation\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias |
+| bp\_no\_rotation\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
+| bp\_no\_rotation\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
+| bp\_no\_rotation\_kms\_key\_id | Globally unique identifier for the key |
+| bp\_no\_rotation\_region | The AWS region this bucket resides in. |
 | bp\_region | The AWS region this bucket resides in. |
 | disabled\_arn | The ARN of the bucket. Will be of format arn:aws:s3:::bucketname. |
 | disabled\_bucket\_domain\_name | The bucket domain name. Will be of format bucketname.s3.amazonaws.com. |
@@ -120,6 +142,26 @@ $ terraform apply
 | extkms\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
 | extkms\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
 | extkms\_kms\_key\_id | Globally unique identifier for the key |
+| extkms\_no\_rotation\_arn | The ARN of the bucket. Will be of format arn:aws:s3:::bucketname. |
+| extkms\_no\_rotation\_bucket\_domain\_name | The bucket domain name. Will be of format bucketname.s3.amazonaws.com. |
+| extkms\_no\_rotation\_bucket\_regional\_domain\_name | The bucket region-specific domain name. The bucket domain name including the region name. |
+| extkms\_no\_rotation\_hosted\_zone\_id | The Route 53 Hosted Zone ID for this bucket's region. |
+| extkms\_no\_rotation\_iam\_policy\_full\_arn | ARN of the full right policy |
+| extkms\_no\_rotation\_iam\_policy\_full\_description | The description of the full right policy |
+| extkms\_no\_rotation\_iam\_policy\_full\_id | ID of the full right policy |
+| extkms\_no\_rotation\_iam\_policy\_full\_name | The name of the full right policy |
+| extkms\_no\_rotation\_iam\_policy\_full\_policy\_document | The policy document |
+| extkms\_no\_rotation\_iam\_policy\_read\_only\_arn | ARN of the read only policy |
+| extkms\_no\_rotation\_iam\_policy\_read\_only\_description | The description of the read only policy |
+| extkms\_no\_rotation\_iam\_policy\_read\_only\_id | ID of the read only policy |
+| extkms\_no\_rotation\_iam\_policy\_read\_only\_name | The name of the read only policy |
+| extkms\_no\_rotation\_iam\_policy\_read\_only\_policy\_document | The policy document |
+| extkms\_no\_rotation\_id | The name of the bucket. |
+| extkms\_no\_rotation\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias |
+| extkms\_no\_rotation\_kms\_alias\_target\_key\_arn | The Amazon Resource Name (ARN) of the target key identifier |
+| extkms\_no\_rotation\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key |
+| extkms\_no\_rotation\_kms\_key\_id | Globally unique identifier for the key |
+| extkms\_no\_rotation\_region | The AWS region this bucket resides in. |
 | extkms\_region | The AWS region this bucket resides in. |
 | logging\_arn | The ARN of the bucket. Will be of format arn:aws:s3:::bucketname. |
 | logging\_bucket\_domain\_name | The bucket domain name. Will be of format bucketname.s3.amazonaws.com. |

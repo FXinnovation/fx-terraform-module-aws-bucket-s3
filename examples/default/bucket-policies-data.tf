@@ -27,6 +27,29 @@ data "aws_iam_policy_document" "policy" {
   }
 }
 
+data "aws_iam_policy_document" "policy_no_rotation" {
+  statement {
+    sid = "1"
+
+    effect = "Allow"
+
+    principals {
+      type = "AWS"
+
+      identifiers = [
+        "arn:aws:iam::744480654312:root",
+      ]
+    }
+
+    actions = [
+      "s3:*",
+    ]
+    resources = [
+      module.policy_no_kms_rotation.arn,
+    ]
+  }
+}
+
 data "aws_iam_policy_document" "kms" {
   statement {
     sid = "1"
