@@ -52,7 +52,7 @@ variable "bucket_policy_json" {
 }
 
 variable "sse_config" {
-  description = "Configures server side encryption for the bucket.  The sse_key should either be set to S3 or a KMS Key ID"
+  description = "Configures server side encryption for the bucket. The sse_key should either be set to S3 or a KMS Key ID. It is highly recommended to use server side encryption for good security practice."
   type = list(object({
     sse_key = string
   }))
@@ -111,7 +111,7 @@ variable "lifecycle_rules" {
 }
 
 variable "logging" {
-  description = "Configure logging on bucket object."
+  description = "Configure logging on bucket object. It is highly recommended to use logging for good security practice."
   type = list(object({
     target_bucket = string
     target_prefix = string
@@ -177,7 +177,7 @@ variable "kms_key_name" {
 }
 
 variable "kms_key_rotation_enabled" {
-  description = "Choose whether key rotation is enabled. Highly recommended."
+  description = "Choose whether key rotation is enabled. It is highly recommended to keep this value to true, for good security practice."
   type        = bool
   default     = true
 }

@@ -2,27 +2,19 @@
 
 Generic module create a S3 bucket, kms encrypted, with 2 base policies that allow read only and full right access.
 
-Work *only* with terraform 0.12.26+.
-
-*Warning*: we have recently been using `terraform_tfsec` hook with `pre-commit-terraform`:
-  - Few vulnerabilities has been raised, providing to commit.
-  - The three main issues reported are about the `logging` not being enabled, the `sse_config` (server-side configuration) not being passed, and the KMS rotation not being setup.
-  - The KMS rotation issue has been addressed, but you can use the new `kms_key_rotation_enabled` input parameter to disable it (`true` by default).
-  - It is *HIGHLY RECOMMENDED* to use both `logging` and `sse_config` while using this module for best security practice.
-
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12.26 |
-| aws | >= 3.0 |
+| aws | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.0 |
+| aws | >= 2.0 |
 
 ## Modules
 
@@ -66,15 +58,15 @@ No Modules.
 | kms\_key\_create | Create a kms key for secure string parameters. | `bool` | `false` | no |
 | kms\_key\_name | Name of the kms key if toggle kms\_key\_create is set | `string` | `""` | no |
 | kms\_key\_policy\_json | A valid policy JSON document. | `string` | `""` | no |
-| kms\_key\_rotation\_enabled | Choose whether key rotation is enabled. Highly recommended. | `bool` | `true` | no |
+| kms\_key\_rotation\_enabled | Choose whether key rotation is enabled. It is highly recommended to keep this value to true, for good security practice. | `bool` | `true` | no |
 | kms\_tags | Tags that will be merged with variable tags for the kms key | `map` | `{}` | no |
 | lifecycle\_rules | A data structure to create lifcycle rules | <pre>list(object({<br>    id                                     = string<br>    prefix                                 = string<br>    tags                                   = map(string)<br>    enabled                                = bool<br>    abort_incomplete_multipart_upload_days = number<br>    expiration_config = list(object({<br>      days                         = number<br>      expired_object_delete_marker = bool<br>    }))<br>    noncurrent_version_expiration_config = list(object({<br>      days = number<br>    }))<br>    transitions_config = list(object({<br>      days          = number<br>      storage_class = string<br>    }))<br>    noncurrent_version_transitions_config = list(object({<br>      days          = number<br>      storage_class = string<br>    }))<br>  }))</pre> | `[]` | no |
-| logging | Configure logging on bucket object. | <pre>list(object({<br>    target_bucket = string<br>    target_prefix = string<br>  }))</pre> | `[]` | no |
+| logging | Configure logging on bucket object. It is highly recommended to use logging for good security practice. | <pre>list(object({<br>    target_bucket = string<br>    target_prefix = string<br>  }))</pre> | `[]` | no |
 | name | Name of the bucket to create. | `string` | n/a | yes |
 | object\_lock\_configuration | Configure an object lock configuration on the bucket object. | <pre>list(object({<br>    object_lock_enabled = string<br>    rule_config = list(object({<br>      mode  = string<br>      days  = number<br>      years = number<br>    }))<br><br>  }))</pre> | `[]` | no |
 | request\_payer | Specifies who should bear the cost of Amazon S3 data transfer. Can be either BucketOwner or Requester | `string` | `"BucketOwner"` | no |
 | restrict\_public\_buckets | Whether Amazon S3 should restrict public bucket policies for this bucket. | `bool` | `false` | no |
-| sse\_config | Configures server side encryption for the bucket.  The sse\_key should either be set to S3 or a KMS Key ID | <pre>list(object({<br>    sse_key = string<br>  }))</pre> | `[]` | no |
+| sse\_config | Configures server side encryption for the bucket. The sse\_key should either be set to S3 or a KMS Key ID. It is highly recommended to use server side encryption for good security practice. | <pre>list(object({<br>    sse_key = string<br>  }))</pre> | `[]` | no |
 | static\_website\_config | A data structure that configures the bucket to host a static website | `list(map(string))` | `[]` | no |
 | tags | Global tags for resources | `map` | `{}` | no |
 | versioning\_config | Configure versioning on bucket object.  Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket | `list(map(string))` | `[]` | no |
