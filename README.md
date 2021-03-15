@@ -2,7 +2,7 @@
 
 Generic module create a S3 bucket, kms encrypted, with 2 base policies that allow read only and full right access.
 
-Work *only* with terraform 0.11.x
+Work *only* with terraform 0.12.26+.
 
 *Warning*: we have recently been using `terraform_tfsec` hook with `pre-commit-terraform`:
   - Few vulnerabilities has been raised, providing to commit.
