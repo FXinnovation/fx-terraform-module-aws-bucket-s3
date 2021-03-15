@@ -4,16 +4,9 @@
   * feat: add kms_key_rotation_enabled input:
     * add support for kms key rotation.
     * kms_key_rotation_enabled input variable defaults to true for best security practice.
-  * feat: add tfsec pre-commit hook, update examples:
-    * add terraform_tfsec hook in .pre-commit-config.yaml.
+  * test: update examples:
     * add standard s3 sse_config in test examples/default/standard-versionned.tf.
     * add sse_config with custom kms key in test examples/default/external-kms-no-policies.tf.
-    * add comments for ignoring some tfsec warnings in main module file:
-      * ignore AWS001: acl policy set to public.
-      * ignore AWS002: no logging.
-      * ignore AWS017: no server-side encryption.
-      * ignore AWS019: no kms rotation enabled.
-  * doc: add comments to explain each tfsec warning ignored and add documentation link.
   * chore: upgrade version and required_providers: upgrade to terraform 0.12.26.
 
 2.0.0 / 2021-02-03

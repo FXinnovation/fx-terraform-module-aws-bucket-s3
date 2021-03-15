@@ -7,24 +7,10 @@ resource "aws_s3_bucket" "this" {
 
   bucket = var.name
 
-  /**
-   * ignore warning for acl policy
-   * since we have a test example for static website: examples/default/static-website.tf
-   * please refer to https://tfsec.dev/docs/aws/AWS001/
-   * DO NOT REMOVE
-   */
-  #tfsec:ignore:AWS001
   acl           = var.acl
   force_destroy = var.force_destroy
   request_payer = var.request_payer
 
-  /**
-   * ignore warning for server-side encryption
-   * it is the developer's responsability to properly enable it.
-   * please refer to https://tfsec.dev/docs/aws/AWS017/
-   * DO NOT REMOVE
-   */
-  #tfsec:ignore:AWS017
   dynamic "server_side_encryption_configuration" {
     for_each = var.sse_config
 
@@ -118,15 +104,6 @@ resource "aws_s3_bucket" "this" {
     }
   }
 
-  /**
-   * ignore warning for no logging enabled
-   * it is the developer's responsability to properly enable it.
-   * for this, it is recommended to create a separate s3 bucket (without logging),
-   * then pass its reference as the target bucket.
-   * please refer to https://tfsec.dev/docs/aws/AWS002/
-   * DO NOT REMOVE
-   */
-  #tfsec:ignore:AWS002
   dynamic "logging" {
     for_each = var.logging
 
@@ -196,14 +173,6 @@ resource "aws_kms_key" "this" {
   description = "KMS Key for ${var.name} S3 encryption."
   policy      = var.kms_key_policy_json
 
-  /**
-   * ignore warning for no kms key rotation enabled
-   * it's the developer's responsability to keep the default variable
-   * var.kms_key_rotation_enabled to true.
-   * please refer to https://tfsec.dev/docs/aws/AWS019/
-   * DO NOT REMOVE
-   */
-  #tfsec:ignore:AWS019
   enable_key_rotation = var.kms_key_rotation_enabled
 
   tags = merge(
