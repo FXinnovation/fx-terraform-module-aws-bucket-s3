@@ -21,6 +21,10 @@ module "standard" {
     mfa_delete = false
   }]
 
+  sse_config = [{
+    sse_key = "S3"
+  }]
+
   tags = {
     testTag = "tftest"
     module  = "standard"

@@ -11,12 +11,18 @@ module "external_kms_no_policies" {
   kms_key_arn       = aws_kms_key.this.arn
   iam_policy_create = false
 
+  sse_config = [{
+    sse_key = aws_kms_key.this.arn
+  }]
+
   tags = {
     testTag = "tftest"
   }
 }
 
 resource "aws_kms_key" "this" {
+  enable_key_rotation = true
+
   tags = merge(
     {
       "Name" = "tftestextkms${random_string.this.result}"
