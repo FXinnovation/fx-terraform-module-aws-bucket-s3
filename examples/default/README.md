@@ -17,14 +17,14 @@ $ terraform apply
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12 |
-| aws | >= 2 |
+| terraform | >= 0.12.26 |
+| aws | >= 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 2 |
+| aws | >= 3.0 |
 | random | n/a |
 
 ## Modules

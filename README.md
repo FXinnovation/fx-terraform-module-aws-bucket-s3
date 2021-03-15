@@ -9,7 +9,7 @@ Work *only* with terraform 0.11.x
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
+| terraform | >= 0.12.26 |
 | aws | >= 3.0 |
 
 ## Providers
