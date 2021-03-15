@@ -4,6 +4,12 @@ Generic module create a S3 bucket, kms encrypted, with 2 base policies that allo
 
 Work *only* with terraform 0.11.x
 
+*Warning*: we have recently been using `terraform_tfsec` hook with `pre-commit-terraform`:
+  - Few vulnerabilities has been raised, providing to commit.
+  - The three main issues reported are about the `logging` not being enabled, the `sse_config` (server-side configuration) not being passed, and the KMS rotation not being setup.
+  - The KMS rotation issue has been addressed, but you can use the new `kms_key_rotation_enabled` input parameter to disable it (`true` by default).
+  - It is *HIGHLY RECOMMENDED* to use both `logging` and `sse_config` while using this module for best security practice.
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
