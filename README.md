@@ -7,14 +7,14 @@ Generic module create a S3 bucket, kms encrypted, with 2 base policies that allo
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.26 |
-| aws | >= 2.0 |
+| terraform | >= 0.14 |
+| aws | >= 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 2.0 |
+| aws | >= 3.0 |
 
 ## Modules
 
