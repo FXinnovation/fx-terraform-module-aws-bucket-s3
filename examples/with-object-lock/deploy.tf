@@ -1,5 +1,16 @@
 #####
-# Object lock with policy example
+# Randoms
+#####
+
+resource "random_string" "this" {
+  length  = 8
+  upper   = false
+  special = false
+}
+
+
+#####
+# IAM Policy for the S3 Bucket
 #####
 
 data "aws_iam_policy_document" "olwp" {
@@ -24,6 +35,11 @@ data "aws_iam_policy_document" "olwp" {
     ]
   }
 }
+
+
+#####
+# S3 with object lock example
+#####
 
 module "object_lock_with_policy" {
   source = "../../"

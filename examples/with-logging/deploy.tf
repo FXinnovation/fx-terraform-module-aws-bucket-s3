@@ -1,5 +1,16 @@
 #####
-# Standard versionned example
+# Randoms
+#####
+
+resource "random_string" "this" {
+  length  = 8
+  upper   = false
+  special = false
+}
+
+
+#####
+# S3 with logging bucket example
 #####
 
 module "logging_destination" {

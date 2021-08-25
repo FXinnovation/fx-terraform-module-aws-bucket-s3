@@ -1,4 +1,15 @@
 #####
+# Randoms
+#####
+
+resource "random_string" "this" {
+  length  = 8
+  upper   = false
+  special = false
+}
+
+
+#####
 # External KMS and no policies example
 #####
 
