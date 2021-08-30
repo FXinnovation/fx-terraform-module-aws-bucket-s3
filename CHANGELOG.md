@@ -1,3 +1,17 @@
+
+4.0.0 / 2021-08-30
+==================
+
+* (BREAKING) chore: pins pre-commit-hooks to v4.0.1
+* chore: pins pre-commit-terraform to v1.50.0
+* chore: pins terraform to >= 0.14
+* chore: pins aws provider to >= 3.5
+* refactor: huge refactor in examples
+   extract each single test in separate directories:
+   `default`, `disabled`, `with-aes256`, `with-external-kms-no-policies`,
+   `with-logging`, `with-object-lock`, `with-policies`, `with-policies-no-kms`.
+   -> the previous example dir was a mess, it was difficult to maintain.
+
 3.0.0 / 2021-05-31
 ===============================
  * chore (BREAKING): upgrade terraform version and aws version.
