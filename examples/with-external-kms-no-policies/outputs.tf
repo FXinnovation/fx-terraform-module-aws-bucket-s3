@@ -32,6 +32,7 @@ output "extkms_region" {
   value       = module.external_kms_no_policies.region
 }
 
+
 #####
 # KMS key
 #####
@@ -55,6 +56,7 @@ output "extkms_kms_alias_target_key_arn" {
   description = "The Amazon Resource Name (ARN) of the target key identifier"
   value       = module.external_kms_no_policies.kms_alias_target_key_arn
 }
+
 
 #####
 # IAM policy

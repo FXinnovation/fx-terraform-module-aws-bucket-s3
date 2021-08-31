@@ -1,6 +1,7 @@
 #####
 # S3 bucket
 #####
+
 output "id" {
   description = "The name of the bucket."
   value       = element(concat(aws_s3_bucket.this.*.id, [""]), 0)
@@ -31,6 +32,7 @@ output "region" {
   value       = element(concat(aws_s3_bucket.this.*.region, [""]), 0)
 }
 
+
 #####
 # KMS key
 #####
@@ -54,6 +56,7 @@ output "kms_alias_target_key_arn" {
   description = "The Amazon Resource Name (ARN) of the target key identifier"
   value       = element(concat(aws_kms_alias.this.*.target_key_arn, [""]), 0)
 }
+
 
 #####
 # IAM policy

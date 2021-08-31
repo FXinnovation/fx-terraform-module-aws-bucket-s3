@@ -32,6 +32,7 @@ output "static_website_region" {
   value       = module.static_website.region
 }
 
+
 #####
 # KMS key
 #####

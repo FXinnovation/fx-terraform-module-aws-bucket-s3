@@ -62,6 +62,7 @@ output "logging_destination_region" {
   value       = module.logging_destination.region
 }
 
+
 #####
 # KMS key
 #####
@@ -105,6 +106,7 @@ output "logging_destination_kms_alias_target_key_arn" {
   description = "The Amazon Resource Name (ARN) of the target key identifier"
   value       = module.logging_destination.kms_alias_target_key_arn
 }
+
 
 #####
 # IAM policy

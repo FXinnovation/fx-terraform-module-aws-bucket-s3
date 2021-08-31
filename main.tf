@@ -163,6 +163,7 @@ resource "aws_s3_bucket_public_access_block" "this" {
   depends_on = [aws_s3_bucket.this, aws_s3_bucket_policy.this]
 }
 
+
 #####
 # KMS key
 #####
@@ -191,6 +192,7 @@ resource "aws_kms_alias" "this" {
   name          = "alias/${var.kms_key_alias_name}"
   target_key_id = element(concat(aws_kms_key.this.*.key_id, [""]), 0)
 }
+
 
 #####
 # IAM policy

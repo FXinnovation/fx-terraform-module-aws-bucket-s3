@@ -32,6 +32,7 @@ output "extkms_no_rotation_region" {
   value       = module.external_kms_no_policies_no_kms_rotation.region
 }
 
+
 #####
 # KMS key
 #####
@@ -55,6 +56,7 @@ output "extkms_no_rotation_kms_alias_target_key_arn" {
   description = "The Amazon Resource Name (ARN) of the target key identifier"
   value       = module.external_kms_no_policies_no_kms_rotation.kms_alias_target_key_arn
 }
+
 
 #####
 # IAM policy

@@ -32,6 +32,7 @@ output "standard_region" {
   value       = module.standard.region
 }
 
+
 #####
 # KMS key
 #####
@@ -55,6 +56,7 @@ output "standard_kms_alias_target_key_arn" {
   description = "The Amazon Resource Name (ARN) of the target key identifier"
   value       = module.standard.kms_alias_target_key_arn
 }
+
 
 #####
 # IAM policy

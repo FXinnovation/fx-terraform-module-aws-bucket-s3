@@ -32,6 +32,7 @@ output "bp_region" {
   value       = module.policy.region
 }
 
+
 #####
 # KMS key
 #####
@@ -55,6 +56,7 @@ output "bp_kms_alias_target_key_arn" {
   description = "The Amazon Resource Name (ARN) of the target key identifier"
   value       = module.policy.kms_alias_target_key_arn
 }
+
 
 #####
 # IAM policy

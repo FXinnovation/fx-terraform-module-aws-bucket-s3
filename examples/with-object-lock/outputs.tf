@@ -32,6 +32,7 @@ output "olwp_region" {
   value       = module.object_lock_with_policy.region
 }
 
+
 #####
 # KMS key
 #####
@@ -55,6 +56,7 @@ output "olwp_kms_alias_target_key_arn" {
   description = "The Amazon Resource Name (ARN) of the target key identifier"
   value       = module.object_lock_with_policy.kms_alias_target_key_arn
 }
+
 
 #####
 # IAM policy

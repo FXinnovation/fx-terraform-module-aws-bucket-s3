@@ -12,6 +12,7 @@ variable "tags" {
   default     = {}
 }
 
+
 #####
 # S3 bucket
 #####
@@ -128,7 +129,6 @@ variable "object_lock_configuration" {
       days  = number
       years = number
     }))
-
   }))
   default = []
 }
@@ -156,6 +156,7 @@ variable "restrict_public_buckets" {
   type        = bool
   default     = false
 }
+
 
 #####
 # KMS key
@@ -201,6 +202,7 @@ variable "kms_key_policy_json" {
   description = "A valid policy JSON document."
   default     = ""
 }
+
 
 ####
 # IAM Policy
