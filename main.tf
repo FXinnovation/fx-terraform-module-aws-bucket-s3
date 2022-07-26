@@ -33,54 +33,6 @@ resource "aws_s3_bucket" "this" {
     }
   }
 
-  dynamic "lifecycle_rule" {
-    for_each = var.lifecycle_rules
-
-    content {
-      id      = lifecycle_rule.value.id
-      prefix  = lifecycle_rule.value.prefix
-      tags    = lifecycle_rule.value.tags
-      enabled = lifecycle_rule.value.enabled
-
-      abort_incomplete_multipart_upload_days = lifecycle_rule.value.abort_incomplete_multipart_upload_days
-
-      dynamic "expiration" {
-        for_each = lifecycle_rule.value.expiration_config
-
-        content {
-          days                         = expiration.value.days
-          expired_object_delete_marker = expiration.value.expired_object_delete_marker
-        }
-      }
-
-      dynamic "noncurrent_version_expiration" {
-        for_each = lifecycle_rule.value.noncurrent_version_expiration_config
-
-        content {
-          days = noncurrent_version_expiration.value.days
-        }
-      }
-
-      dynamic "transition" {
-        for_each = lifecycle_rule.value.transitions_config
-
-        content {
-          days          = transition.value.days
-          storage_class = transition.value.storage_class
-        }
-      }
-
-      dynamic "noncurrent_version_transition" {
-        for_each = lifecycle_rule.value.noncurrent_version_transitions_config
-
-        content {
-          days          = noncurrent_version_transition.value.days
-          storage_class = noncurrent_version_transition.value.storage_class
-        }
-      }
-    }
-  }
-
   dynamic "website" {
     for_each = var.static_website_config
 
@@ -141,6 +93,37 @@ resource "aws_s3_bucket" "this" {
     var.bucket_tags,
     var.tags,
   )
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "this" {
+  bucket = element(concat(aws_s3_bucket.this.*.id, [""]), 0)
+
+  rule {
+    id = "standard_to_ia_to_glacier"
+
+    filter {
+      and {
+        prefix = "standard_to_ia_to_glacier/"
+
+        tags = {
+          rule      = "standard_to_ia_to_glacier"
+          autoclean = "true"
+        }
+      }
+    }
+
+    status = "Enabled"
+
+    transition {
+      days          = 30
+      storage_class = "STANDARD_IA"
+    }
+
+    transition {
+      days          = 60
+      storage_class = "GLACIER"
+    }
+  }
 }
 
 resource "aws_s3_bucket_policy" "this" {
